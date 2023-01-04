@@ -22,7 +22,7 @@ h2 {
     justify-content: space-evenly;
     max-width: 400px;
     margin: 0 auto;
-    padding: 10px 0;
+    padding: 5px 0;
     font-size: medium;
 }
 
@@ -40,7 +40,7 @@ nav {
     justify-content: space-evenly;
     max-width: 400px;
     margin: 0 auto;
-    padding: 10px 0;
+    padding: 5px 0;
     background-image: url(../_static/gaming1_nav.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;

@@ -375,7 +375,8 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
             LOGGER.info('\n---&&&___RHYTHM SPACE FILLED___&&&---\n')
         return rhythm_space, time_signature
 
-    def build_MIDI(rhythm_space: list, tempo: float = 120, time_signature: str = '4/4', LOGGER: any = None):
+    def rock_MIDI(rhythm_space: list, tempo: float = 120, time_signature: str = '4/4', 
+                   LOGGER: any = None):
         """ IN: Rhythm Space MIDI Map / Partial Breakability (Step 2)
             OUT: MIDI File for USER to download OR regenerate (FUTURE: Playback)"""
 
@@ -393,6 +394,9 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
         MyMIDI = MIDIFile(1, file_format=1)  # One track, defaults to format 1 (tempo track created)
         MyMIDI.addTempo(track=1, time=0, tempo=bpm)
         bar_ct = 0
+
+        # Rock Specific Rules:
+        # timbre =
 
         for bar in rhythm_space:
             bar_ct += 1
@@ -414,13 +418,25 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
                     if LOGGER:
                         LOGGER.info(f'Duration Added to Time!: {time}')
 
+        # Reset time to overwrite with hi hats test
+        time = 0
+
+        for bar in rhythm_space:
+            print(f"\n[[[ Just Adding Hi Hats ]]]\n")
+
+            for i in range(8):
+                degrees = 42
+                duration = 0.5
+                MyMIDI.addNote(track, channel, degrees, time, duration, volume)
+                time += duration
+
         return MyMIDI
 
     # -- Testing / FUNCTION Drivers --
 
     # Build MIDI File
     rhythm_space, time_signature = build_rhythm_space(USER_PRESETS=USER_PRESETS, LOGGER=LOGGER)
-    MIDI_file = build_MIDI(rhythm_space=rhythm_space, time_signature=time_signature, LOGGER=LOGGER)
+    MIDI_file = rock_MIDI(rhythm_space=rhythm_space, time_signature=time_signature, LOGGER=LOGGER)
 
     # Temp MIDI File Overwrites.
     file_path = 'temp_MIDI_File.mid'

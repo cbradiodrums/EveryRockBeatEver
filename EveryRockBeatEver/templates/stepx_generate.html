@@ -1,11 +1,6 @@
 {% extends "base.html" %}
 {%  block lower_body %}
 <table style="margin-left: auto; margin-right: auto; justify-content:center; color:white">
-    <!-- Page Title Row -->
-     <tr class="blank_row">
-            <td colspan="6" style="font-size: x-large; color: white">MIDI File Generator</td>
-     </tr><tr class="blank_row">
-            <td colspan="2"></td>
      <!-- Page Info Row -->
     <tr class="blank_row">
             <td colspan="6" style="font-size: small; color: white">
@@ -18,99 +13,21 @@
      </tr><tr class="blank_row">
             <td colspan="2"></td>
      </tr>
-    <!-- Random All Row -->
-    <tr>
-                <th style="font-size: medium; text-align:center; color:white" colspan="6">
-                {{ 'random_all'.upper() }} : {{ USER_PRESETS['random_all[]']['random_all'] }} ||
-                </th>
-     </tr>
-     <!-- Step INFO Row -->
-     {% for key in USER_PRESETS %}
-        {% if key[:5] == 'step1' %}
-            <tr>
-            <th style="text-align:center; color:white">
-            {{ key.upper() }} --
-            </th>
-            {%  for sub_key, value in USER_PRESETS[key].items() %}
-                {% if sub_key not in ['step2_partial_map', 'step3_voicings', 'step4_dynamics', 'step5_timbres'] %}
-                    {%  if sub_key[5:] != '_random' %}
-                        <th style="text-align:center; color:white">
-                        {{ sub_key[6:].upper() }} : {{ value }} _||_
-                        </th>
-                    {% endif %}
-                {% endif %}
-            {%  endfor %}
-            </tr>
-        {% endif %}
-     {% endfor %}
-    <tr>
-        {% for key in USER_PRESETS %}
-            {% if key[:4] == 'step' %}
-                {%  for sub_key, value in USER_PRESETS[key].items() %}
-                    {%  if sub_key[5:] == '_random' %}
-                        <th style="text-align:center; color:white">
-                        {{ sub_key.upper() }} : {{ value }} ||
-                        </th>
-                    {% endif %}
-                {%  endfor %}
-            {% endif %}
-     {% endfor %}
-    </tr>
-     <tr class="blank_row">
-            <td colspan="3"></td>
-     </tr><tr class="blank_row">
-            <td colspan="3"></td>
-     </tr>
- </table>
+</table>
 <form method="post">
     <table style="margin-left: auto; margin-right: auto; justify-content:center;
     text-align:center; color: white">
-        <tr>
-            <th>Preset Configurations: {{ user_preset }}</th>
-        </tr><tr>
-            <td>
-            {% if USER_PRESETS %}
-            <input type="submit" name="save_preset" value="Save Preset">
-            {% else %}
-            <input type="submit" name="save_preset" value="Save Preset" disabled>
-            {% endif %}
-            <label for="load_preset">Load Preset: </label>
-                <input type="file" formenctype="multipart/form-data"
-                       name="load_preset" value="Load Preset" id="load_preset"></td>
-        </tr><tr class="blank_row">
+        <tr class="blank_row">
                 <td colspan="3"></td>
         </tr><tr>
-            <th>Generate Custom MIDI (from Current Parameters)</th>
-            <th>Quick Generate MIDI (OVERRIDE ALL PARAMETERS)</th>
-        </tr><tr>
-            <td><select name="fill_mode" disabled>
-                <option selected>Fill With Rests</option>
-                <option>Force Notes</option>
-            </select>
-            <input type="submit" name="generate_midi" value="Generate Custom MIDI"></td>
-            <td><select name="random_all" id="RANDOM-RANDOM_MAP">
-                <optgroup label="Retain Above Values">
-                <option value="-1" selected>Custom</option>
-                </optgroup><optgroup label="--OVERRIDES ABOVE--">
-                </optgroup><optgroup label="RANDOM">
-                <option value="-2">Basic Random</option>
-                <option value="-3">Advanced Random</option>
-                <option value="-4">Ludicrous Random</option>
-                <option value="-5">ANY Random</option>
-                </optgroup><optgroup label="GENRE">
-                <option value="-2" disabled>Rock (Time)</option>
-                <option value="-3" disabled>Rock (Half Time)</option>
-                </optgroup><optgroup label="ARTIST">
-                <option value="-2" disabled>Meshuggah</option>
-                </optgroup>
-            </select>
-            <input type="submit" name="quick_generate" value="Quick Generate">
-            </td>
-        </tr><tr class="blank_row">
-                <td colspan="3"></td>
-        </tr><tr>
+            <th>Generate Rock Beat!</th>
+            <th style="padding: 10px"> | </th>
             <th>Current MIDI File = {{  MIDI_file }}</th>
         </tr><tr>
+            <td>
+                <input type="submit" name="quick_generate" value="Quick Generate">
+            </td>
+            <th style="padding: 10px"></th>
             {%  if MIDI_file %}
             <td>
                 <input type="submit" name="download_midi" value="Download MIDI">
@@ -120,9 +37,9 @@
                 <input type="submit" name="download_midi" value="disabled" disabled>
             </td>
             {% endif %}
+        </tr><tr class="blank_row">
+                <td colspan="3"></td>
         </tr>
     </table>
 </form>
 {%  endblock %}
-
-
