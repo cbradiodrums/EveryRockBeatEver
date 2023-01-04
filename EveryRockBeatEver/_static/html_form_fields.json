@@ -1,0 +1,708 @@
+{
+  "step1[]": {
+    "step1_bars": [
+      {
+        "MODIFIERS": {
+          "RANDOM": [
+            "Basic",
+            "Advanced",
+            "Extreme"
+          ],
+          "SHUFFLE": [
+            "ANY"
+          ]
+        },
+        "Basic": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "Advanced": [
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16"
+        ],
+        "Extreme": [
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30",
+          "31",
+          "32",
+          "33",
+          "34",
+          "35",
+          "36",
+          "37",
+          "38",
+          "39",
+          "40",
+          "41",
+          "42",
+          "43",
+          "44",
+          "45",
+          "46",
+          "47",
+          "48",
+          "49",
+          "50",
+          "51",
+          "52",
+          "53",
+          "54",
+          "55",
+          "56",
+          "57",
+          "58",
+          "59",
+          "60",
+          "61",
+          "62",
+          "63",
+          "64"
+        ]
+      },
+      "Number of Bars: "
+    ],
+    "step1_time_signature": [
+      {
+        "MODIFIERS": {
+          "RANDOM": [
+            "Basic",
+            "Advanced",
+            "Extreme"
+          ],
+          "SHUFFLE": [
+            "ANY"
+          ]
+        },
+        "Basic": [
+          "4/4",
+          "3/4",
+          "2/4",
+          "6/8",
+          "12/8"
+        ],
+        "Advanced": [
+          "5/4",
+          "6/4",
+          "7/4",
+          "9/4",
+          "3/8",
+          "5/8",
+          "7/8",
+          "9/8",
+          "11/8",
+          "13/8",
+          "15/8"
+        ],
+        "Extreme": [
+          "11/16",
+          "13/16",
+          "15/16",
+          "17/16",
+          "19/16",
+          "21/16",
+          "23/16",
+          "25/16",
+          "27/16",
+          "29/16",
+          "31/16",
+          "33/16"
+        ]
+      },
+      "Time Signature: "
+    ],
+    "step1_random_seed": [
+      {
+        "MODIFIERS": {
+          "RANDOM": [
+            "Basic",
+            "Advanced",
+            "Extreme"
+          ],
+          "SHUFFLE": [
+            "ANY"
+          ]
+        },
+        "Basic": [
+          "Default"
+        ],
+        "Advanced": [
+          "Default"
+        ],
+        "Extreme": [
+          "Default"
+        ]
+      },
+      "Random Seed: "
+    ],
+    "step1_partial_palette": [
+      {
+        "MODIFIERS": {
+          "RANDOM": [
+            "Basic",
+            "Advanced",
+            "Extreme"
+          ],
+          "SHUFFLE": [
+            "ANY"
+          ]
+        }
+      },
+      "Partial Palette: "
+    ],
+    "step1_random": [
+      {
+        "MODIFIERS": {
+          "NONE": [
+            "Custom"
+          ],
+          "RANDOM": [
+            "Basic",
+            "Advanced",
+            "Extreme"
+          ],
+          "SHUFFLE": [
+            "ANY"
+          ]
+        }
+      },
+      "STEP1 RANDOM Attributes: "
+    ]
+  },
+  "step2[]": {
+    "step2_partial_map": [
+      {
+        "MODIFIERS": {
+          "RANDOM": [
+            "Basic",
+            "Advanced",
+            "Extreme"
+          ],
+          "SHUFFLE": [
+            "ANY"
+          ]
+        },
+        "Basic": {
+          "4th_1st(Whole)": {
+            "WGT": "True",
+            "VAL": "4/1",
+            "BRK": {
+              "1/1": "True"
+            }
+          },
+          "4th_2nd(Half)": {
+            "WGT": "True",
+            "VAL": "2/1",
+            "BRK": {
+              "1/1": "True"
+            }
+          },
+          "4th_4th(Quarter)": {
+            "WGT": "True",
+            "VAL": "1/1",
+            "BRK": {
+              "1/1": "True"
+            }
+          },
+          "4th_8th": {
+            "WGT": "True",
+            "VAL": "1/2",
+            "BRK": {
+              "2/2": "True",
+              "1/2": "True"
+            }
+          },
+          "4th_16th": {
+            "WGT": "True",
+            "VAL": "1/4",
+            "BRK": {
+              "4/4": "True",
+              "2/4": "True",
+              "1/4": "True"
+            }
+          },
+          "4th_32nd": {
+            "WGT": "True",
+            "VAL": "1/8",
+            "BRK": {
+              "8/8": "True",
+              "4/8": "True",
+              "3/8": "False",
+              "2/8": "False",
+              "1/8": "False"
+            }
+          },
+          "3rd_4th(Quarter)": {
+            "WGT": "True",
+            "VAL": "2/3",
+            "BRK": {
+              "3/3": "True",
+              "1/3": "False"
+            }
+          },
+          "3rd_8th": {
+            "WGT": "True",
+            "VAL": "1/3",
+            "BRK": {
+              "3/3": "True",
+              "1/3": "False"
+            }
+          },
+          "3rd_16th": {
+            "WGT": "True",
+            "VAL": "1/6",
+            "BRK": {
+              "6/6": "True",
+              "3/6": "True",
+              "2/6": "False",
+              "1/6": "False"
+            }
+          },
+          "5th_8th": {
+            "WGT": "False",
+            "VAL": "2/5",
+            "BRK": {
+              "5/5": "False",
+              "2/5": "False",
+              "1/5": "False"
+            }
+          },
+          "5th_16th": {
+            "WGT": "False",
+            "VAL": "1/5",
+            "BRK": {
+              "5/5": "False",
+              "2/5": "False",
+              "1/5": "False"
+            }
+          },
+          "7th_8th": {
+            "WGT": "False",
+            "VAL": "2/7",
+            "BRK": {
+              "7/7": "False",
+              "3/7": "False",
+              "2/7": "False",
+              "1/7": "False"
+            }
+          },
+          "7th_16th": {
+            "WGT": "False",
+            "VAL": "1/7",
+            "BRK": {
+              "7/7": "False",
+              "3/7": "False",
+              "2/7": "False",
+              "1/7": "False"
+            }
+          },
+          "9th_16th": {
+            "WGT": "False",
+            "VAL": "1/9",
+            "BRK": {
+              "9/9": "False",
+              "4/9": "False",
+              "3/9": "False",
+              "2/9": "False",
+              "1/9": "False"
+            }
+          },
+          "11th_16th": {
+            "WGT": "False",
+            "VAL": "1/11",
+            "BRK": {
+              "11/11": "False",
+              "5/11": "False",
+              "4/11": "False",
+              "3/11": "False",
+              "2/11": "False",
+              "1/11": "False"
+            }
+          },
+          "13th_16th": {
+            "WGT": "False",
+            "VAL": "1/13",
+            "BRK": {
+              "13/13": "False",
+              "6/13": "False",
+              "5/13": "False",
+              "4/13": "False",
+              "3/13": "False",
+              "2/13": "False",
+              "1/13": "False"
+            }
+          }
+        },
+        "Advanced": {
+          "4th_1st(Whole)": {
+            "WGT": "True",
+            "VAL": "1/1",
+            "BRK": {
+              "1/1": "True"
+            }
+          },
+          "4th_2nd(Half)": {
+            "WGT": "True",
+            "VAL": "1/1",
+            "BRK": {
+              "1/1": "True"
+            }
+          },
+          "4th_4th(Quarter)": {
+            "WGT": "True",
+            "VAL": "1/1",
+            "BRK": {
+              "1/1": "True"
+            }
+          },
+          "4th_8th": {
+            "WGT": "True",
+            "VAL": "1/2",
+            "BRK": {
+              "2/2": "True",
+              "1/2": "True"
+            }
+          },
+          "4th_16th": {
+            "WGT": "True",
+            "VAL": "1/4",
+            "BRK": {
+              "4/4": "True",
+              "2/4": "True",
+              "1/4": "True"
+            }
+          },
+          "4th_32nd": {
+            "WGT": "True",
+            "VAL": "1/8",
+            "BRK": {
+              "8/8": "True",
+              "4/8": "True",
+              "3/8": "False",
+              "2/8": "True",
+              "1/8": "False"
+            }
+          },
+          "3rd_4th(Quarter)": {
+            "WGT": "True",
+            "VAL": "2/3",
+            "BRK": {
+              "3/3": "True",
+              "1/3": "False"
+            }
+          },
+          "3rd_8th": {
+            "WGT": "True",
+            "VAL": "1/3",
+            "BRK": {
+              "3/3": "True",
+              "1/3": "False"
+            }
+          },
+          "3rd_16th": {
+            "WGT": "True",
+            "VAL": "1/6",
+            "BRK": {
+              "6/6": "True",
+              "3/6": "True",
+              "2/6": "False",
+              "1/6": "False"
+            }
+          },
+          "5th_8th": {
+            "WGT": "True",
+            "VAL": "2/5",
+            "BRK": {
+              "5/5": "True",
+              "2/5": "False",
+              "1/5": "False"
+            }
+          },
+          "5th_16th": {
+            "WGT": "True",
+            "VAL": "1/5",
+            "BRK": {
+              "5/5": "True",
+              "2/5": "False",
+              "1/5": "False"
+            }
+          },
+          "7th_8th": {
+            "WGT": "True",
+            "VAL": "2/7",
+            "BRK": {
+              "7/7": "True",
+              "3/7": "False",
+              "2/7": "False",
+              "1/7": "False"
+            }
+          },
+          "7th_16th": {
+            "WGT": "True",
+            "VAL": "1/7",
+            "BRK": {
+              "7/7": "True",
+              "3/7": "False",
+              "2/7": "False",
+              "1/7": "False"
+            }
+          },
+          "9th_16th": {
+            "WGT": "True",
+            "VAL": "1/9",
+            "BRK": {
+              "9/9": "True",
+              "4/9": "False",
+              "3/9": "False",
+              "2/9": "False",
+              "1/9": "False"
+            }
+          },
+          "11th_16th": {
+            "WGT": "True",
+            "VAL": "1/11",
+            "BRK": {
+              "11/11": "True",
+              "5/11": "False",
+              "4/11": "False",
+              "3/11": "False",
+              "2/11": "False",
+              "1/11": "False"
+            }
+          },
+          "13th_16th": {
+            "WGT": "True",
+            "VAL": "1/13",
+            "BRK": {
+              "13/13": "True",
+              "6/13": "False",
+              "5/13": "False",
+              "4/13": "False",
+              "3/13": "False",
+              "2/13": "False",
+              "1/13": "False"
+            }
+          }
+        },
+        "Extreme": {
+          "4th_1st(Whole)": {
+            "WGT": "True",
+            "VAL": "1/1",
+            "BRK": {
+              "1/1": "True"
+            }
+          },
+          "4th_2nd(Half)": {
+            "WGT": "True",
+            "VAL": "1/1",
+            "BRK": {
+              "1/1": "True"
+            }
+          },
+          "4th_4th(Quarter)": {
+            "WGT": "True",
+            "VAL": "1/1",
+            "BRK": {
+              "1/1": "True"
+            }
+          },
+          "4th_8th": {
+            "WGT": "True",
+            "VAL": "1/2",
+            "BRK": {
+              "2/2": "True",
+              "1/2": "True"
+            }
+          },
+          "4th_16th": {
+            "WGT": "True",
+            "VAL": "1/4",
+            "BRK": {
+              "4/4": "True",
+              "2/4": "True",
+              "1/4": "True"
+            }
+          },
+          "4th_32nd": {
+            "WGT": "True",
+            "VAL": "1/8",
+            "BRK": {
+              "8/8": "True",
+              "4/8": "True",
+              "3/8": "True",
+              "2/8": "True",
+              "1/8": "True"
+            }
+          },
+          "3rd_4th(Quarter)": {
+            "WGT": "True",
+            "VAL": "2/3",
+            "BRK": {
+              "3/3": "True",
+              "1/3": "True"
+            }
+          },
+          "3rd_8th": {
+            "WGT": "True",
+            "VAL": "1/3",
+            "BRK": {
+              "3/3": "True",
+              "1/3": "True"
+            }
+          },
+          "3rd_16th": {
+            "WGT": "True",
+            "VAL": "1/6",
+            "BRK": {
+              "6/6": "True",
+              "3/6": "True",
+              "2/6": "True",
+              "1/6": "True"
+            }
+          },
+          "5th_8th": {
+            "WGT": "True",
+            "VAL": "2/5",
+            "BRK": {
+              "5/5": "True",
+              "2/5": "True",
+              "1/5": "True"
+            }
+          },
+          "5th_16th": {
+            "WGT": "True",
+            "VAL": "1/5",
+            "BRK": {
+              "5/5": "True",
+              "2/5": "True",
+              "1/5": "True"
+            }
+          },
+          "7th_8th": {
+            "WGT": "True",
+            "VAL": "2/7",
+            "BRK": {
+              "7/7": "True",
+              "3/7": "True",
+              "2/7": "True",
+              "1/7": "True"
+            }
+          },
+          "7th_16th": {
+            "WGT": "True",
+            "VAL": "1/7",
+            "BRK": {
+              "7/7": "True",
+              "3/7": "True",
+              "2/7": "True",
+              "1/7": "True"
+            }
+          },
+          "9th_16th": {
+            "WGT": "True",
+            "VAL": "1/9",
+            "BRK": {
+              "9/9": "True",
+              "4/9": "True",
+              "3/9": "True",
+              "2/9": "True",
+              "1/9": "True"
+            }
+          },
+          "11th_16th": {
+            "WGT": "True",
+            "VAL": "1/11",
+            "BRK": {
+              "11/11": "True",
+              "5/11": "True",
+              "4/11": "True",
+              "3/11": "True",
+              "2/11": "True",
+              "1/11": "True"
+            }
+          },
+          "13th_16th": {
+            "WGT": "True",
+            "VAL": "1/13",
+            "BRK": {
+              "13/13": "True",
+              "6/13": "True",
+              "5/13": "True",
+              "4/13": "True",
+              "3/13": "True",
+              "2/13": "True",
+              "1/13": "True"
+            }
+          }
+        }
+      },
+      "Partial Map: "
+    ],
+    "step2_random": [
+      {
+        "MODIFIERS": {
+          "NONE": [
+            "Custom"
+          ],
+          "RANDOM": [
+            "Basic",
+            "Advanced",
+            "Extreme"
+          ],
+          "SHUFFLE": [
+            "ANY"
+          ]
+        }
+      },
+      "ALL RANDOM Attributes: "
+    ]
+  },
+  "random_all[]": {
+    "random_all": [
+      {
+        "MODIFIERS": {
+          "NONE": [
+            "Custom"
+          ],
+          "RANDOM": [
+            "Basic",
+            "Advanced",
+            "Extreme"
+          ],
+          "SHUFFLE": [
+            "ANY"
+          ]
+        }
+      },
+      "STEP2 RANDOM Attributes: "
+    ]
+  }
+}
+
+
+

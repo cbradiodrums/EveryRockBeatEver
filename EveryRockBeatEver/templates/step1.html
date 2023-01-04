@@ -1,0 +1,64 @@
+{%  extends "base.html" %}
+{% block lower_body %}
+{% set num, exclude = ["1", "2", "3", "4", "5"], ['step2_partial_map'] %}
+{% for n in num %}
+    {{ exclude.append('step' + n + '_random') or "" }}
+{% endfor %}
+<form id="step1_form" name="step1[]" method="post">
+    <table style="margin-left: auto; margin-right: auto; justify-content:center; color:white">
+         <! -- Page Title Row -->
+         <tr class="blank_row">
+                <td colspan="3" style="font-size: x-large; color: white">Custom Tune: Step 1</td>
+         </tr><tr class="blank_row">
+                <td colspan="3"></td>
+         </tr>
+         {% for sub_key in HFF['step1[]'] %}
+            {% if sub_key == 'step1_random' %}
+                <tr class="blank_row">
+                    <td colspan="3"></td>
+                </tr>
+            {% endif %}
+                <tr>
+                    <th>
+                        <label for="{{ HFF['step1[]'][sub_key] }}">
+                            {{ HFF['step1[]'][sub_key][1] }}
+                        </label>
+                    </th>
+                    <td>
+                        <select name="step1[]" id="{{ HFF['step1[]'][sub_key] }}">
+                                {% for deep_key in HFF['step1[]'][sub_key][0] %}
+                                    {% if deep_key == 'MODIFIERS' %}
+                                        {% for low_key in HFF['step1[]'][sub_key][0]['MODIFIERS'] %}
+                                            <optgroup label="{{ low_key }}">
+                                                {% for value in HFF['step1[]'][sub_key][0][deep_key][low_key] %}
+                                                    <option value="{{ 'step1[]|' + sub_key + '|' + value }}">
+                                                        {{ value }}
+                                                    </option>
+                                                {% endfor %}
+                                            </optgroup>
+                                        {% endfor %}
+                                    {% else %}
+                                        <optgroup label="{{ deep_key }}">
+                                            {% for value in HFF['step1[]'][sub_key][0][deep_key] %}
+                                                <option value="{{ 'step1[]|' + sub_key + '|' + value }}">
+                                                    {{ value }}
+                                                </option>
+                                            {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+        {% endfor %}
+         <tr class="blank_row">
+                <td colspan="3"></td>
+         </tr>
+     </table>
+    <button type="submit">Submit</button>
+    <input type="submit" name="submit[]" value="Save..." disabled>
+    <input type="submit" name="submit[]" value="Load" disabled>
+</form>
+{% endblock %}
+
+

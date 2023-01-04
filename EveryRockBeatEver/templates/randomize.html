@@ -1,0 +1,86 @@
+{%  extends "base.html" %}
+{% block lower_body %}
+{% set num, exclude = ["1", "2", "3", "4", "5"], ['step2_partial_map'] %}
+{% for n in num %}
+    {{ exclude.append('step' + n + '_random') or "" }}
+{% endfor %}
+<form id="randomizer_form" name="randomize[]" method="post">
+    <table style="margin-left: auto; margin-right: auto; justify-content:center; color:white">
+        <! -- Page Title Row -->
+         <tr class="blank_row">
+                <td colspan="3" style="font-size: x-large; color: white">Randomizer</td>
+         </tr><tr class="blank_row">
+                <td colspan="2"></td>
+         </tr>
+        <!-- Page Info Row -->
+        <tr class="blank_row">
+                <td colspan="3" style="font-size: small; color: white">
+                    Session ID: {{ session_id }}
+                </td>
+         </tr><tr class="blank_row">
+                <td colspan="3" style="font-size: small; color: white">
+                    Template ID: {{ template_id }}
+                </td>
+         </tr><tr class="blank_row">
+                <td colspan="2"></td>
+         </tr>
+         {% for key in HFF %}
+            {% if key == 'random_all[]' %}
+                <tr class="blank_row">
+                    <td colspan="3"></td>
+                </tr>
+            {% endif %}
+            {% for sub_key in HFF[key] %}
+                {% if sub_key not in exclude %}
+                    <tr>
+                        <th>
+                            {% if sub_key != 'step1_partial_palette' %}
+                                <label for="{{ HFF[key][sub_key] }}">
+                                    {{ HFF[key][sub_key][1] }}
+                                </label>
+                            {% else %}
+                                <label for="{{ HFF[key][sub_key] }}">
+                                    {{ 'Partial Map Build' }}
+                                </label>
+                            {% endif %}
+                        </th>
+                        <td>
+                            <select name="randomize[]" id="{{ HFF[key][sub_key] }}">
+                                    {%  for low_key in HFF[key][sub_key][0]['MODIFIERS'] %}
+                                        {% if sub_key != 'step1_partial_palette' %}
+                                            <optgroup label="{{ low_key }}">
+                                                {% for value in HFF[key][sub_key][0]['MODIFIERS'][low_key] %}
+                                                    <option value="{{key + '|' + sub_key + '|' + value }}">
+                                                        {{ value }}
+                                                    </option>
+                                                {% endfor %}
+                                            </optgroup>
+                                        {% else %}
+                                            <optgroup label="{{ low_key }}">
+                                                {% for value in HFF[key][sub_key][0]['MODIFIERS'][low_key] %}
+                                                    {% if low_key != 'NONE' %}
+                                                        <option value="{{ 'step2[]|step2_random|' + value }}">
+                                                            {{ value }}
+                                                        </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </optgroup>
+                                        {% endif %}
+                                    {% endfor %}
+                            </select>
+                        </td>
+                     </tr>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+         <tr class="blank_row">
+                <td colspan="3"></td>
+         </tr>
+     </table>
+    <button type="submit">Submit</button>
+    <input type="submit" name="submit[]" value="Save..." disabled>
+    <input type="submit" name="submit[]" value="Load" disabled>
+</form>
+{% endblock %}
+
+

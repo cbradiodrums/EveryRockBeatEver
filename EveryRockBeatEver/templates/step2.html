@@ -1,0 +1,114 @@
+{%  extends "base.html" %}
+{% block lower_body %}
+ <table style="margin-left: auto; margin-right: auto; justify-content:center; color:white">
+     <tr class="blank_row">
+            <td colspan="3"></td>
+     </tr><tr class="blank_row">
+            <td colspan="3"></td>
+     </tr>
+     <tr> <!-- INFO Row -->
+             {% for key, value in USER_TEMPLATE['step1[]'].items() %}
+                <th style="text-align:center; color:white">
+                {{ key.upper() }} : {{ value }} ||
+                </th>
+             {% endfor %}
+     </tr>
+     <tr class="blank_row">
+            <td colspan="3"></td>
+     </tr><tr class="blank_row">
+            <td colspan="3"></td>
+     </tr>
+ </table>
+ <form method="post">
+     <table style="margin-left: auto; margin-right: auto; justify-content:center; color:white">
+         <tr> <!-- Headers Row -->
+             <th>Partial Image</th>
+             <th>Partial Name</th>
+             <th>-- Weight --</th>
+             <th>Breakability</th>
+             <th>-- Weight --</th>
+         </tr>
+         {% set priority = ['3','1','2','4','5'] %}
+         {% for key in step2_partial_map %}
+            {% if step2_partial_map[key]['WGT'] != 'False'%}
+                 <tr>
+                    <td><img src="../_static/note_imgs/{{ key }}.png" alt="{{ key }}"/></td><!-- Note IMG -->
+                    <th>
+                        <label for="{{ key }}" style="justify-content: right"> <!-- Note type [key] -->
+                            {{ key }}:
+                        </label>
+                    </th>
+                    <td>
+                        <select name="step2[]" id="{{ key }}"><!-- Weight -->
+                            <optgroup label="Include">
+                                {% for value in priority %}
+                                    <option value="step2[]|step2_partial_map|{{ key }}|WGT|{{ value }}">
+                                        {{ value }}
+                                    </option>
+                                {% endfor %}
+                            </optgroup>
+                            <optgroup label="EXCLUDE">
+                                    <option value="step2[]|step2_partial_map|{{ key }}|WGT|0"> 0 </option>
+                            </optgroup>
+                        </select>
+                    </td>
+                     {% for deep_key in step2_partial_map[key]['BRK'] %}
+                        {% if step2_partial_map[key]['BRK'][deep_key] != 'False' %}
+                             <th>
+                                <label for="{{ key + deep_key }}"> <!-- Breakability [key] -->
+                                    {{ deep_key }}:
+                                </label>
+                            </th>
+                             <td>
+                                <select name="step2[]" id="{{ key + deep_key }}"><!-- Breakability -->
+                                    <optgroup label="Include">
+                                        {% for value in priority %}
+                                            <option value="step2[]|step2_partial_map|{{ key }}|BRK|{{ deep_key }}|{{ value }}">
+                                                {{ value }}
+                                            </option>
+                                        {% endfor %}
+                                    </optgroup>
+                                    <optgroup label="EXCLUDE">
+                                            <option value="step2[]|step2_partial_map|{{ key }}|BRK|{{ deep_key }}|0">
+                                                0
+                                            </option>
+                                    </optgroup>
+                                </select>
+                             </td>
+                        {% endif %}
+                     {% endfor %}
+                 </tr>
+            {% endif %}
+         {% endfor %}
+             <tr class="blank_row">
+                    <td colspan="3"></td>
+             </tr>
+         {% for key in HFF['step2[]']['step2_random'][0] %}
+             <tr class="blank_row">
+                    <td colspan="3"></td>
+             </tr>
+             <tr>
+                <th>
+                    <label for="{{ HFF['step2[]']['step2_random'] }}">{{ HFF['step2[]']['step2_random'][1] }}</label>
+                </th>
+                <td>
+                    <select name="step2[]" id="{{ HFF['step2[]']['step2_random'] }}">
+                        {% for sub_key in HFF['step2[]']['step2_random'][0]['MODIFIERS'] %}
+                        <optgroup label="{{ sub_key }}">
+                            {% for value in HFF['step2[]']['step2_random'][0]['MODIFIERS'][sub_key] %}
+                                <option value="{{ 'step2[]|step2_random|' + value }}">{{ value }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+         {% endfor %}
+     </table>
+ <br><p style="text-align: center; color:white"> Submit Above Parameters</p>
+<button type="submit">Submit</button>
+ <br><p style="text-align: center; color:white"> Save / Load Above Parameters</p>
+<input type="submit" name="save_step" value="Save Step" disabled>
+<input type="submit" name="load_step" value="Load Step" disabled>
+</form>
+{%  endblock %}
