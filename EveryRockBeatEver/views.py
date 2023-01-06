@@ -6,6 +6,8 @@ from EveryRockBeatEver.db import legal_file
 import json
 import secrets
 from pygame import mixer
+# from midi2audio import FluidSynth
+
 
 bp = Blueprint("views", __name__)
 
@@ -84,6 +86,7 @@ def quick_generate(LOGGER: any = None, MIDI_sheet: any = None):
                 mixer.init()
                 mixer.music.load("temp_MIDI_File.mid")
                 mixer.music.play()
+                # FluidSynth().play_midi('temp_MIDI_File.mid')
 
     # SAVE LOG before transfer
     # LOGGER = legal_file(USER_PRESETS=USER_STOCK_JSON, task='SAVE', file_type='LOG')
