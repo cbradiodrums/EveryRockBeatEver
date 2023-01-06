@@ -5,7 +5,7 @@ from EveryRockBeatEver.functions import generate_MIDI, parse_user_preset
 from EveryRockBeatEver.db import legal_file
 import json
 import secrets
-import pygame
+from pygame import mixer
 
 bp = Blueprint("views", __name__)
 
@@ -81,9 +81,9 @@ def quick_generate(LOGGER: any = None, MIDI_sheet: any = None):
         if request.form.get('playback_midi') and MIDI_file:
             print(MIDI_file, request.form.get('playback_midi'))
             if 'Playback MIDI' in request.form['playback_midi']:
-                pygame.init()
-                pygame.mixer.music.load("temp_MIDI_File.mid")
-                pygame.mixer.music.play()
+                mixer.init()
+                mixer.music.load("temp_MIDI_File.mid")
+                mixer.music.play()
 
     # SAVE LOG before transfer
     # LOGGER = legal_file(USER_PRESETS=USER_STOCK_JSON, task='SAVE', file_type='LOG')
