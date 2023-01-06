@@ -6,3 +6,4 @@ pytest~=7.2.0
 boto3~=1.26.27
 botocore~=1.29.27
 MIDIUtil~=1.2.1
+pygame~=2.1.2

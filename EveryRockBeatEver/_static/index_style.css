@@ -71,3 +71,7 @@ nav ul li a, nav ul li span, header .action {
   display: block;
   padding: 0.5rem;
 }
+input.mobile_button {
+    width: 20px;  height: 5px;
+    font-size : medium;
+}

@@ -5,6 +5,7 @@ from EveryRockBeatEver.functions import generate_MIDI, parse_user_preset
 from EveryRockBeatEver.db import legal_file
 import json
 import secrets
+import pygame
 
 bp = Blueprint("views", __name__)
 
@@ -14,7 +15,7 @@ with open("./EveryRockBeatEver/_static/rock_presets_template.json") as f:
 
 
 @bp.route('/', methods=['GET', 'POST'])
-def quick_generate(LOGGER: any = None):
+def quick_generate(LOGGER: any = None, MIDI_sheet: any = None):
     """ DISPLAY: Bars, Tempo, and Write MIDI button
         IN: Bars, Tempo
         OUT: Write Pathos MIDI to MIDI_files folder """
@@ -75,6 +76,14 @@ def quick_generate(LOGGER: any = None):
                 url = legal_file(USER_PRESETS=USER_STOCK_JSON, task='DOWNLOAD', file_type='MIDI')
                 print(url)
                 return redirect(url)
+
+        # USER clicked on Playback MIDI after Generate MIDI
+        if request.form.get('playback_midi') and MIDI_file:
+            print(MIDI_file, request.form.get('playback_midi'))
+            if 'Playback MIDI' in request.form['playback_midi']:
+                pygame.init()
+                pygame.mixer.music.load("temp_MIDI_File.mid")
+                pygame.mixer.music.play()
 
     # SAVE LOG before transfer
     # LOGGER = legal_file(USER_PRESETS=USER_STOCK_JSON, task='SAVE', file_type='LOG')

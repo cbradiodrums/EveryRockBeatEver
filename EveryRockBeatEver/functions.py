@@ -270,9 +270,9 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
         for note in partial_map:
             p_wgt = partial_map[note]['WGT']
             if p_wgt not in ['False', 'None', '0']:
-                for part in range(int(p_wgt)):
+                for part in range(int(p_wgt)**2):
                     partial_bowl.append(note)
-        legal_partial_bowl = partial_bowl.copy()
+
         if print_stmnt:
             print(f'partial bowl: {partial_bowl}\n partial_bowl_set: {set(partial_bowl)}')
         if LOGGER:
@@ -287,6 +287,8 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
 
             # Instantiate the Available Bar Length, Rhythm Map, and (initial) PARTIAL BOWL
             bar_rhythm_map, bar_space = [], Fr(time_signature) * 4
+            legal_partial_bowl = partial_bowl.copy()
+            print(f"\nLegal Partial Bowl: {legal_partial_bowl}\n")  # VERIFY!!
 
             # Subtract from the rhythm space until it reaches 0
             while bar_space > 0:

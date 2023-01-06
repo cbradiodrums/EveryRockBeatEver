@@ -21,16 +21,32 @@
                 <td colspan="3"></td>
         </tr><tr>
             <th>Generate Rock Beat!</th>
-            <th style="padding: 10px"> | </th>
-            <th>Current MIDI File = {{  MIDI_file }}</th>
         </tr><tr>
             <td>
-                <input type="submit" name="quick_generate" value="Quick Generate">
+                <input type="submit" name="quick_generate" value="Quick Generate" class="mobile_button">
             </td>
-            <th style="padding: 10px"></th>
+        </tr><tr>
+            <th style="padding-bottom: 20px"></th>
+        </tr><tr>
+            <th>Playback MIDI File</th>
+        </tr><tr>
             {%  if MIDI_file %}
             <td>
-                <input type="submit" name="download_midi" value="Download MIDI">
+                <input type="submit" name="playback_midi" value="Playback MIDI" class="mobile_button">
+            </td>
+            {%  else %}
+            <td>
+                <input type="submit" name="download_midi" value="disabled" disabled>
+            </td>
+            {% endif %}
+        </tr><tr>
+            <th style="padding-bottom: 20px"></th>
+        </tr><tr>
+            <th>Current MIDI File = {{  MIDI_file }}</th>
+        </tr><tr>
+            {%  if MIDI_file %}
+            <td>
+                <input type="submit" name="download_midi" value="Download MIDI" class="mobile_button">
             </td>
             {%  else %}
             <td>
