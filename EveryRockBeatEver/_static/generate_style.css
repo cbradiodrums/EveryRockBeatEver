@@ -65,6 +65,10 @@ nav ul  {
   margin: 0;
   padding: 0;
 }
+input.mobile_button {
+    width: 20em;  height: 5em;
+    font-size: medium;
+}
 
 nav ul li a, nav ul li span, header .action {
   display: block;
