@@ -6,8 +6,6 @@ from EveryRockBeatEver.db import legal_file
 import json
 import secrets
 from pygame import mixer
-# from midi2audio import FluidSynth
-
 
 bp = Blueprint("views", __name__)
 
@@ -17,7 +15,7 @@ with open("./EveryRockBeatEver/_static/rock_presets_template.json") as f:
 
 
 @bp.route('/', methods=['GET', 'POST'])
-def quick_generate(LOGGER: any = None, MIDI_sheet: any = None):
+def quick_generate(LOGGER: any = None, CONTEXT: any = None):
     """ DISPLAY: Bars, Tempo, and Write MIDI button
         IN: Bars, Tempo
         OUT: Write Pathos MIDI to MIDI_files folder """
@@ -51,7 +49,6 @@ def quick_generate(LOGGER: any = None, MIDI_sheet: any = None):
         # If the user clicked on the GENERATE CUSTOM MIDI button
         if request.form.get('quick_generate'):
             if 'Quick Generate' in request.form.get('quick_generate'):
-
                 # Instantiate / Rewrite a template ID
                 template_id = secrets.token_urlsafe(16)
                 USER_STOCK_JSON['template_id'] = f'{template_id}'
@@ -80,20 +77,20 @@ def quick_generate(LOGGER: any = None, MIDI_sheet: any = None):
                 return redirect(url)
 
         # USER clicked on Playback MIDI after Generate MIDI
-        if request.form.get('playback_midi') and MIDI_file:
+        if (request.form.get('playback_midi') and MIDI_file and
+                CONTEXT == 'LOCAL'):
             print(MIDI_file, request.form.get('playback_midi'))
             if 'Playback MIDI' in request.form['playback_midi']:
                 mixer.init()
                 mixer.music.load("temp_MIDI_File.mid")
                 mixer.music.play()
-                # FluidSynth().play_midi('temp_MIDI_File.mid')
 
     # SAVE LOG before transfer
     # LOGGER = legal_file(USER_PRESETS=USER_STOCK_JSON, task='SAVE', file_type='LOG')
     print(f'\n MIDI File: {MIDI_file}\n')
 
     return render_template('stepx_generate.html', title='ERBE - Generate MIDI File',
-                           MIDI_file=MIDI_file, url=url,
+                           MIDI_file=MIDI_file, url=url, CONTEXT=current_app.config['APP_CONTEXT'],
                            # USER_PRESETS=USER_PRESETS,
                            # USER_TEMPLATE=USER_TEMPLATE,
                            session_id=f"{session.get('session_id')}",
@@ -110,4 +107,3 @@ def about():
 def tutorial():
     """ -- Tutorials Section -- """
     return render_template('tutorial.html', title='Tutorial')
-

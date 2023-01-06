@@ -30,13 +30,13 @@
         </tr><tr>
             <th>Playback MIDI File</th>
         </tr><tr>
-            {%  if MIDI_file %}
+            {%  if MIDI_file and context == 'LOCAL' %}
             <td>
                 <input type="submit" name="playback_midi" value="Playback MIDI" class="mobile_button">
             </td>
             {%  else %}
             <td>
-                <input type="submit" name="download_midi" value="disabled" disabled>
+                <input type="submit" name="playback_midi" value="disabled" disabled>
             </td>
             {% endif %}
         </tr><tr>
