@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import session, current_app
-from flask import Flask, render_template, request, redirect, url_for
-from EveryRockBeatEver.functions import generate_MIDI, parse_user_preset
+from flask import render_template, request, redirect, url_for, send_file
+from EveryRockBeatEver.functions import generate_MIDI
 from EveryRockBeatEver.db import legal_file
 import json
 import secrets
@@ -42,9 +42,6 @@ def quick_generate(LOGGER: any = None, CONTEXT: any = None):
 
     # If the USER submitted data
     if request.method == 'POST':
-        print(request.form, MIDI_file)
-        for i in request.form:
-            print(i, request.form[i])
 
         # If the user clicked on the GENERATE CUSTOM MIDI button
         if request.form.get('quick_generate'):
@@ -56,9 +53,8 @@ def quick_generate(LOGGER: any = None, CONTEXT: any = None):
                 LOGGER.info(f"\n{'*' * 6} Template Initialized!! {'*' * 6}\n"
                             f"+++[[[ Template ID: {USER_STOCK_JSON['template_id']} ]]]+++\n")
 
-                # Preserve USER TEMPLATE and Generate MIDI File
+                # Preserve USER TEMPLATE and Generate MIDI File (print_stmnt = True for console logs)
                 MIDI_file = generate_MIDI(USER_PRESETS=USER_STOCK_JSON, LOGGER=LOGGER)
-                print(f'\n MIDI File: {MIDI_file}\n')
 
                 # Save MIDI File -- Overwrite Local Instance
                 MIDI_save = legal_file(USER_PRESETS=USER_STOCK_JSON, task='SAVE',
@@ -70,29 +66,28 @@ def quick_generate(LOGGER: any = None, CONTEXT: any = None):
 
         # USER clicked on Download MIDI after Generate MIDI
         if request.form.get('download_midi') and MIDI_file:
-            print(MIDI_file, request.form.get('download_midi'))
             if 'Download MIDI' in request.form['download_midi']:
-                url = legal_file(USER_PRESETS=USER_STOCK_JSON, task='DOWNLOAD', file_type='MIDI')
-                print(url)
-                return redirect(url)
+                if current_app.config["APP_CONTEXT"] != 'LOCAL':
+                    url = legal_file(USER_PRESETS=USER_STOCK_JSON, task='DOWNLOAD', file_type='MIDI')
+                    return redirect(url)
+                else:
+                    return send_file('../' + MIDI_file, MIDI_file)
 
         # USER clicked on Playback MIDI after Generate MIDI
         if (request.form.get('playback_midi') and MIDI_file and
-                CONTEXT == 'LOCAL'):
-            print(MIDI_file, request.form.get('playback_midi'))
+                current_app.config["APP_CONTEXT"] == 'LOCAL'):
             if 'Playback MIDI' in request.form['playback_midi']:
                 mixer.init()
-                mixer.music.load("temp_MIDI_File.mid")
+                mixer.music.load(MIDI_file)
                 mixer.music.play()
+            if 'Stop MIDI' in request.form['playback_midi']:
+                mixer.music.stop()
 
     # SAVE LOG before transfer
     # LOGGER = legal_file(USER_PRESETS=USER_STOCK_JSON, task='SAVE', file_type='LOG')
-    print(f'\n MIDI File: {MIDI_file}\n')
 
     return render_template('stepx_generate.html', title='ERBE - Generate MIDI File',
                            MIDI_file=MIDI_file, url=url, CONTEXT=current_app.config['APP_CONTEXT'],
-                           # USER_PRESETS=USER_PRESETS,
-                           # USER_TEMPLATE=USER_TEMPLATE,
                            session_id=f"{session.get('session_id')}",
                            template_id=f"{session.get('template_id')}")
 

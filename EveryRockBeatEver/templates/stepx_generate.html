@@ -27,19 +27,21 @@
             </td>
         </tr><tr>
             <th style="padding-bottom: 20px"></th>
-        </tr><tr>
+        </tr>
+        {% if CONTEXT == 'LOCAL' and MIDI_file %}
+        <tr>
             <th>Playback MIDI File</th>
         </tr><tr>
-            {%  if MIDI_file and context == 'LOCAL' %}
             <td>
                 <input type="submit" name="playback_midi" value="Playback MIDI" class="mobile_button">
             </td>
-            {%  else %}
-            <td>
-                <input type="submit" name="playback_midi" value="disabled" disabled>
-            </td>
-            {% endif %}
         </tr><tr>
+            <td>
+                <input type="submit" name="playback_midi" value="Stop MIDI" class="mobile_button">
+            </td>
+        </tr>
+        {% endif %}
+        <tr>
             <th style="padding-bottom: 20px"></th>
         </tr><tr>
             <th>Current MIDI File = {{  MIDI_file }}</th>
@@ -47,7 +49,6 @@
             {%  if MIDI_file %}
             <td>
                 <input type="submit" name="download_midi" value="Download MIDI" class="mobile_button">
-                <audio src="../_static/test.mp3" controls>Testing</audio>
             </td>
             {%  else %}
             <td>

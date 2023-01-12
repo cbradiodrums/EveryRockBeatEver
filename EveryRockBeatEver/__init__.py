@@ -6,8 +6,11 @@ from flask import Flask
 def create_app(test_config=None):
     """ Create and configure an instance of the Flask application.
         Read Footer for launch instructions. """
+    # Instantiate APP and Assign APP Context
     app = Flask(__name__, instance_relative_config=True, static_folder='_static')
     app_key = secrets.token_hex(16)
+    app.config.from_mapping(APP_CONTEXT=os.getenv('CONTEXT'), VERSION=os.getenv('VERSION'),
+                            SECRET_KEY=f'{app_key}')
 
     # If this is a Full environment, use all resources
     if os.getenv('CONTEXT') == 'FULL':
@@ -36,9 +39,6 @@ def create_app(test_config=None):
         app.config.from_mapping(
             # Use Local Resources
             LOCAL_UPLOAD=app.instance_path)
-    # Assign APP Context
-    app.config.from_mapping(APP_CONTEXT=os.getenv('CONTEXT'), VERSION=os.getenv('VERSION'),
-                            SECRET_KEY=f'{app_key}')
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -55,7 +55,6 @@ def create_app(test_config=None):
 
     # register the database commands
     from EveryRockBeatEver import db
-    # db.init_app(app)
 
     # apply the blueprints to the app
     from EveryRockBeatEver import views, functions
