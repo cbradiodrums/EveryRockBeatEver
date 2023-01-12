@@ -9,10 +9,14 @@ body {background-image: url(../_static/gaming2_bg.jpg);
         }
 
 h1, h3, h4, h5, h6 {
-  color: black;
-  -webkit-text-fill-color: cadetblue; /* Will override color (regardless of order) */
+    color: black;
+    -webkit-text-fill-color: cadetblue; /* Will override color (regardless of order) */
   /*-webkit-text-stroke-width: 1px;*/
   /*-webkit-text-stroke-color: deeppink;*/
+    max-width: 320px;
+    font-size: xx-large;
+    text-align: center;
+    margin-left: auto; margin-right: auto;
 }
 h2 a {
     color: lightpink;
@@ -20,10 +24,10 @@ h2 a {
 h2 {
     display: flex;
     justify-content: space-evenly;
-    max-width: 400px;
+    max-width: 320px;
     margin: 0 auto;
     padding: 10px 0;
-    font-size: medium;
+    font-size: large;
 }
 
 nav a {
@@ -38,12 +42,10 @@ hr {
 nav {
     display: flex;
     justify-content: space-evenly;
-    max-width: 400px;
+    max-width: 320px;
     margin: 0 auto;
-    padding: 10px 0;
-    background-image: url(../_static/gaming1_nav.jpg);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    padding: 50px 0;
+    font-size: x-large;
 }
 
 nav h1 {
@@ -66,8 +68,9 @@ nav ul  {
   padding: 0;
 }
 input.mobile_button {
-    width: 20em;  height: 5em;
-    font-size: medium;
+    width: 10em;  height: 2em;
+    font-size: xx-large;
+    max-width: 320px;
 }
 
 nav ul li a, nav ul li span, header .action {
