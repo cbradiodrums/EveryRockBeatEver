@@ -5,12 +5,14 @@ FROM python:3.9-slim-buster
 WORKDIR /EveryRockBeatEver
 
 COPY requirements.txt requirements.txt
-RUN apt-get update && apt-get install -yq \
-    libgtk2.0-dev \
-    libasound2 \
-    alsa-tools \
-    && pip3 install -r requirements.txt
+# ALSA RUN Dialog
+# RUN apt-get update && apt-get install -yq \
+#    libgtk2.0-dev \
+#    libasound2 \
+#    alsa-tools \
+#    && pip3 install -r requirements.txt
 # && rm -rf /var/lib/apt/lists/* \
+RUN pip3 install -r requirements.txt
 
 COPY . .
 

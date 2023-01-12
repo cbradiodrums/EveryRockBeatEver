@@ -13,17 +13,19 @@ from fractions import Fraction as Fr
 import random
 from copy import deepcopy
 
-from flask import Blueprint, current_app
+from flask import Blueprint
 
 bp = Blueprint("functions", __name__)
 
 
 def parse_user_preset(HFF: dict = None, USER_PRESETS_UPLOAD: dict = None, form_submit: list = None,
-                      print_stmnt: bool = True, step1_forms: bool = None, step2_custom: bool = None,
+                      print_stmnt: any = None, step1_forms: bool = None, step2_custom: bool = None,
                       LOGGER: any = None):
     """ IN:
             FORM SUBMIT FORMAT: [MASTER|KEY|SUB_KEY|DEEP_KEY|LOW_KEY|VALUE]
             HFF: HTML_FORM_FIELD, USER_PRESETS: (If None: USER_PRESETS_TEMPLATE) (else: loaded USER_PRESETS)
+            LOGGER: Logging Object to write logfile
+            print_stmnt: Console printing (True if Enabled)
             STEP1: step1[Bars, Time Signature, Random Seed, Random? Partial Palette] || random_step1 || random_all
             STEP2: step2[Weights, Breakability] || random_step1 / step1[2]
             STEP3: step3[Voicing, Weight] || random_step2 / step3[] Voicing Palette
@@ -247,9 +249,8 @@ def parse_user_preset(HFF: dict = None, USER_PRESETS_UPLOAD: dict = None, form_s
     return USER_PRESETS, USER_TEMPLATE
 
 
-def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
-
-    def build_rhythm_space(USER_PRESETS: dict = None, print_stmnt: bool = True, LOGGER: any = None):
+def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None, print_stmnt: any = None):
+    def build_rhythm_space(USER_PRESETS: dict = None, print_stmnt: any = None, LOGGER: any = None):
         """ IN: USER parsed BARS, TEMPO, & PARTIAL DICTIONARY
             OUT: MIDI FILE Write Schematic """
 
@@ -270,7 +271,7 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
         for note in partial_map:
             p_wgt = partial_map[note]['WGT']
             if p_wgt not in ['False', 'None', '0']:
-                for part in range(int(p_wgt)**2):
+                for part in range(int(p_wgt) ** 2):
                     partial_bowl.append(note)
 
         if print_stmnt:
@@ -281,14 +282,16 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
         # Determine which bar we are working on / Instantiate Rhythm Space
         rhythm_space = []
         for bar in range(bars):
-            print(f"\nBar Number: # {bar + 1} / {bars}, Time Signature: {time_signature}\n")  # VERIFY!!
+            if print_stmnt:
+                print(f"\nBar Number: # {bar + 1} / {bars}, Time Signature: {time_signature}\n")  # VERIFY!!
             if LOGGER:
                 LOGGER.info(f"\nBar Number: # {bar + 1} / {bars}, Time Signature: {time_signature}\n")
 
             # Instantiate the Available Bar Length, Rhythm Map, and (initial) PARTIAL BOWL
             bar_rhythm_map, bar_space = [], Fr(time_signature) * 4
             legal_partial_bowl = partial_bowl.copy()
-            print(f"\nLegal Partial Bowl: {legal_partial_bowl}\n")  # VERIFY!!
+            if print_stmnt:
+                print(f"\nLegal Partial Bowl: {legal_partial_bowl}\n")  # VERIFY!!
 
             # Subtract from the rhythm space until it reaches 0
             while bar_space > 0:
@@ -337,7 +340,8 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
                 else:
                     # Choose a RANDOM LEGAL PARTIAL BREAKABILITY:
                     breakability = Fr(brk_bowl[random.randint(0, len(brk_bowl) - 1)], _normalize=False)
-                    print('BREAKABILITY Selected:', breakability)
+                    if print_stmnt:
+                        print('BREAKABILITY Selected:', breakability)
 
                     # RANDOMLY Select the BREAKABILITY or its INVERSE (if < Bar Space and > 0):
                     if 0 < (1 - breakability) <= bar_space:
@@ -345,11 +349,14 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
                         if shuffle >= 3:
                             breakability = Fr(breakability.denominator - breakability.numerator,
                                               breakability.denominator, _normalize=False)
-                            print('Inverse Selected:', breakability)  # VERIFY!!
+                            if print_stmnt:
+                                print('Inverse Selected:', breakability)  # VERIFY!!
                         else:
-                            print('Standard Select:', breakability)  # VERIFY!!
+                            if print_stmnt:
+                                print('Standard Select:', breakability)  # VERIFY!!
                     else:
-                        print('Standard Select:', breakability)  # VERIFY!!
+                        if print_stmnt:
+                            print('Standard Select:', breakability)  # VERIFY!!
 
                     # Partial Space in range(BREAKABILITY (NUMERATOR)) = NOTE BLOCK to Append!
                     note_block = []
@@ -359,26 +366,29 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
 
                     # Subtract the NOTE BLOCK from the BAR SPACE:
                     bar_space -= sum(note_block)
-                    print(f'===\nBAR RHYTHM MAP:, {bar_rhythm_map}\nBAR SPACE Remaining: {bar_space}'
-                          f'\nNOTE BLOCK selected:, {note_block}\n===')  # VERIFY!!
+                    if print_stmnt:
+                        print(f'===\nBAR RHYTHM MAP:, {bar_rhythm_map}\nBAR SPACE Remaining: {bar_space}'
+                              f'\nNOTE BLOCK selected:, {note_block}\n===')  # VERIFY!!
                     if LOGGER:
                         LOGGER.info(f'===\nBAR RHYTHM MAP:, {bar_rhythm_map}\nBAR SPACE Remaining: {bar_space}'
                                     f'\nNOTE BLOCK selected:, {note_block}\n===')
 
             # Tally the PARTIAL BREAKABILITY Assignments to Finish the BAR
             rhythm_space.append(bar_rhythm_map)
-            print(f'***RHYTHM SPACE ( Bar # {bar + 1} / {bars} Time Signature: {time_signature} ):'
-                  f'\n {rhythm_space}\n')
+            if print_stmnt:
+                print(f'***RHYTHM SPACE ( Bar # {bar + 1} / {bars} Time Signature: {time_signature} ):'
+                      f'\n {rhythm_space}\n')
             if LOGGER:
                 LOGGER.info(f'***RHYTHM SPACE ( Bar # {bar + 1} / {bars} Time Signature: {time_signature} ):'
-                  f'\n {rhythm_space}\n')
-        print('\n---&&&___RHYTHM SPACE FILLED___&&&---\n')
+                            f'\n {rhythm_space}\n')
+        if print_stmnt:
+            print('\n---&&&___RHYTHM SPACE FILLED___&&&---\n')
         if LOGGER:
             LOGGER.info('\n---&&&___RHYTHM SPACE FILLED___&&&---\n')
         return rhythm_space, time_signature
 
-    def rock_MIDI(rhythm_space: list, tempo: float = 120, time_signature: str = '4/4', 
-                   LOGGER: any = None):
+    def rock_MIDI(rhythm_space: list, tempo: float = 120, time_signature: str = '4/4',
+                  LOGGER: any = None, print_stmnt: any = None):
         """ IN: Rhythm Space MIDI Map / Partial Breakability (Step 2)
             OUT: MIDI File for USER to download OR regenerate (FUTURE: Playback)"""
 
@@ -387,22 +397,21 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
         volume = 100  # FUTURE DYNAMICS MAP [0 - 127]
         time = 0  # Where the Note is Placed (i.e. Count #1 = 0, Count #2 = 1)
         duration = 0  # How long the Note is held (i.e. Quarter = 1.0, 8th = 0.5)
-        bpm = tempo  # In BPM
+        # tempo = USER_PRESETS['tempo']  # Placeholder for USER Input
+        bpm = random.randint(80, 160)  # In BPM
 
         # Parse Time Signature -- Must exist in the power of 2**
-        ts_power2 = [str(2**i) for i in range(0, 7)]
+        ts_power2 = [str(2 ** i) for i in range(0, 7)]
         ts_num, ts_den = time_signature.split('/')[0], str(ts_power2.index(time_signature.split('/')[1]))
 
         MyMIDI = MIDIFile(1, file_format=1)  # One track, defaults to format 1 (tempo track created)
         MyMIDI.addTempo(track=1, time=0, tempo=bpm)
         bar_ct = 0
 
-        # Rock Specific Rules:
-        # timbre =
-
         for bar in rhythm_space:
             bar_ct += 1
-            print(f"\n+++ BAR #{bar_ct} / {len(rhythm_space)}, Time Signature: {ts_num}/{ts_den} +++\n")
+            if print_stmnt:
+                print(f"\n+++ BAR #{bar_ct} / {len(rhythm_space)}, Time Signature: {ts_num}/{ts_den} +++\n")
             if LOGGER:
                 LOGGER.info(f"\n+++ BAR #{bar_ct} / {len(rhythm_space)}, Time Signature: {ts_num}/{ts_den} +++\n")
             MyMIDI.addTimeSignature(track=1, time=time, numerator=int(ts_num), denominator=int(ts_den),
@@ -411,20 +420,23 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
                 for partial in note_group:
                     degrees = degrees_list[random.randint(0, len(degrees_list) - 1)]
                     duration = partial
-                    print(f'Insert Time: {time}, Partial / Duration: {partial}, Pitch: {degrees}')
+                    if print_stmnt:
+                        print(f'Insert Time: {time}, Partial / Duration: {partial}, Pitch: {degrees}')
                     if LOGGER:
                         LOGGER.info(f'Insert Time: {time}, Partial / Duration: {partial}, Pitch: {degrees}')
                     MyMIDI.addNote(track, channel, degrees, time, duration, volume)
                     time += duration
-                    print(f'Duration Added to Time!: {time}')
+                    if print_stmnt:
+                        print(f'Duration Added to Time!: {time}')
                     if LOGGER:
                         LOGGER.info(f'Duration Added to Time!: {time}')
 
-        # Reset time to overwrite with hi hats test
+        # Reset time to overwrite with hi hats test -- MVP
         time = 0
 
         for bar in rhythm_space:
-            print(f"\n[[[ Just Adding Hi Hats ]]]\n")
+            if print_stmnt:
+                print(f"\n[[[ Just Adding Hi Hats ]]]\n")
 
             for i in range(8):
                 degrees = 42
@@ -437,8 +449,10 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None):
     # -- Testing / FUNCTION Drivers --
 
     # Build MIDI File
-    rhythm_space, time_signature = build_rhythm_space(USER_PRESETS=USER_PRESETS, LOGGER=LOGGER)
-    MIDI_file = rock_MIDI(rhythm_space=rhythm_space, time_signature=time_signature, LOGGER=LOGGER)
+    rhythm_space, time_signature = build_rhythm_space(USER_PRESETS=USER_PRESETS,
+                                                      LOGGER=LOGGER, print_stmnt=print_stmnt)
+    MIDI_file = rock_MIDI(rhythm_space=rhythm_space, time_signature=time_signature,
+                          LOGGER=LOGGER, print_stmnt=print_stmnt)
 
     # Temp MIDI File Overwrites.
     file_path = 'temp_MIDI_File.mid'

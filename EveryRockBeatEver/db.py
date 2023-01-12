@@ -1,5 +1,4 @@
 from flask import current_app
-from flask import g
 import os
 import json
 import boto3
@@ -10,7 +9,7 @@ import logging
 def get_s3(client: any = 'client'):
     """ Connect to the application's cloud database. Configure in dotenv. """
 
-    if current_app.config["CLOUD_SERVER"] is not None:
+    if current_app.config["APP_CONTEXT"] != 'LOCAL':
         # Client Side
         if client == 'client':
             session = boto3.session.Session()
@@ -138,23 +137,6 @@ def legal_file(USER_PRESETS: dict = None, task: str = '',
                                                 Params={'Bucket': BUCKET, 'Key': file_path},
                                                 ExpiresIn=60)
             return url
-
-
-def close_db(e=None):
-    """If this request connected to the database, close the
-    connection.
-    """
-    s3 = g.pop("s3", None)
-
-    # if s3 is not None:
-    #     s3.close()
-
-
-def init_app(app):
-    """Register database functions with the Flask app. This is called by
-    the application factory.
-    """
-    current_app.app_context()
 
 
 def check_file_duplicates(UPLOAD_FOLDER_TYPE: str, UPLOAD_FOLDER: str, UPLOAD_FOLDER_KEY: str,
