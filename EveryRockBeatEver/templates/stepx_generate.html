@@ -28,7 +28,7 @@
         </tr><tr>
             <th style="padding-bottom: 20px"></th>
         </tr>
-        {% if CONTEXT == 'LOCAL' and MIDI_file %}
+        {% if CONTEXT != 'CLOUD' and MIDI_file %}
         <tr>
             <th>Playback MIDI File</th>
         </tr><tr>

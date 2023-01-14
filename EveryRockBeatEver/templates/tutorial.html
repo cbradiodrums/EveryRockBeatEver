@@ -1,6 +1,57 @@
 {%  extends "base.html" %}
 {% block lower_body %}
-     <h2>
-        yo yo yo whuddup
-        </h2>
+     <h3>
+        Basic Overview
+     </h3>
+    <h4 class="tab1">
+        This section is to demonstrate how a User may use this App when it has been deployed<br>
+        (The User is not running the code on their local machine).
+    </h4>
+    <h4 style="text-align: left">
+        1) If not already on the "Home" Page, click on <a>Home</a> Link at the top of the page<br><br>
+        2) Click on the <button>Quick Generate</button> Button<br><br>
+        3) Click on the <button>Download MIDI</button> Button, this will download the MIDI File wherever your
+            Internet Browser stores its downloads.<br><br>
+        4) See Below on how to play MIDI Files:
+    </h4>
+    <h3>
+        How to Play MIDI File by Your System Type
+     </h3>
+    <table style="margin-left: auto; margin-right: auto; color: white; text-align: center">
+        <tr>
+            <th> Operating System </th>
+            <th style="padding-left: 10px"> Needed Software </th>
+            <th style="padding-left: 10px"> Instructions </th>
+        </tr>
+        <tr>
+            <td> Windows (Windows 10 64-Bit) </td>
+            <td style="padding-left: 10px"> Windows Media Player (Included) </td>
+            <td style="padding-left: 10px"> Simply Open the MIDI_[your_template_id].mid file to Play </td>
+        </tr>
+        <tr>
+            <td> Android Mobile (Version 12) </td>
+            <td style="padding-left: 10px">
+                <a href="https://play.google.com/store/apps/details?id=net.volcanomobile.midiplayer&hl=en_US&gl=US&pli=1"
+                style="color: lightpink">
+                    MIDI Player (Google Play Store)
+                </a>
+            </td>
+            <td style="padding-left: 10px"> Simply Open MIDI Player and hit Play </td>
+        </tr>
+    </table>
+    <h4 class="tab1">
+        If you would like to tinker around with the code for this project, it can be found at:<br><br>
+    <a href="https://github.com/cbradiodrums/EveryRockBeatEver"> https://github.com/cbradiodrums/EveryRockBeatEver </a>
+    <br><br> Feel free to leave comments and suggestions for feature implementations and bug fixes.
+    </h4>
+    <h3>
+        Demonstration Videos:
+     </h3>
+    <h4 class="tab1">
+        <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+            <iframe src="https://www.loom.com/embed/3bcdfa46038b4b58827da452c2481cdb" frameborder="0"
+                    webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0;
+                    left: 0; width: 100%; height: 100%;"></iframe>
+        </div>
+    </h4>
 {% endblock %}
