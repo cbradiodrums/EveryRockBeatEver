@@ -5,7 +5,7 @@ FROM python:3.9-slim-buster
 WORKDIR /EveryRockBeatEver
 
 COPY requirements.txt requirements.txt
-# ALSA RUN Dialog
+# ALSA RUN Dialog -- WIP for CLOUD Deployment (Production)
 # RUN apt-get update && apt-get install -yq \
 #    libgtk2.0-dev \
 #    libasound2 \

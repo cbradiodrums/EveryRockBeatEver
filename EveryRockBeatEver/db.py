@@ -44,9 +44,9 @@ def legal_file(USER_PRESETS: dict = None, task: str = '', template_id: str = Non
         FUNCTION: task[SAVE/LOAD/LOG/DOWNLOAD] -> location(s) [LOCAL/CLOUD]
          OUT: SAVE (null), LOAD (FILE_OBJECT) """
 
-    # Determine the USER -- current session / template
-    # session_id, template_id = USER_PRESETS['session_id'], USER_PRESETS['template_id']
+    # COPY the USER PRESETS as to not overwrite the local instance
     USER_PRESETS_COPY = deepcopy(USER_PRESETS)
+
     if USER_PRESETS:
         if session_id:
             USER_PRESETS_COPY['session_id'] = session_id
@@ -71,21 +71,17 @@ def legal_file(USER_PRESETS: dict = None, task: str = '', template_id: str = Non
 
     else:
         ROOT, KEY, FILE = None, None, None
-    print(ROOT, KEY, FILE)
 
     # Local Instance -- If Cloud, SKIP
     if current_app.config["APP_CONTEXT"] != 'CLOUD' or file_type in ['LOG']:
-        # print(f'\n{current_app.instance_path}/users/usr_{session_id}/{KEY}')
-        # print(f'{current_app.instance_path}/users/{ROOT}/{KEY}/{FILE}\n')
 
         # Determine if the Directory needs to be created
-        # print(os.listdir(f'{current_app.instance_path}'))
         if f'users' not in os.listdir(f'{current_app.instance_path}'):
             os.makedirs(f'{current_app.instance_path}/users/')
-        # print(os.listdir(f'{current_app.instance_path}/users/'))
+
         if f'usr_{session_id}' not in os.listdir(f'{current_app.instance_path}/users/'):
             os.makedirs(f'{current_app.instance_path}/users/usr_{session_id}/')
-        # print(os.listdir(f'{current_app.instance_path}/users/usr_{session_id}'))
+
         if KEY not in os.listdir(f'{current_app.instance_path}/users/usr_{session_id}'):
             os.makedirs(f'{current_app.instance_path}/users/usr_{session_id}/{KEY}')
 
@@ -116,13 +112,11 @@ def legal_file(USER_PRESETS: dict = None, task: str = '', template_id: str = Non
                 return FILE
 
             elif FILE[-4:] == '.txt' or file_type == 'LOG':
-                print(f'LOAD Log Object here: {file_path}')
                 LOGGER = logging.getLogger(file_path)
                 return LOGGER
 
         elif task == 'LOG':
             file_path = f'{current_app.instance_path}/users/{ROOT}/{KEY}/{FILE}'
-            print(f'Instantiate Logging Object and Return Here: {file_path}')
             LOGGER = logging.getLogger(file_path)
             LOGGER.setLevel(logging.DEBUG)
             formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -138,32 +132,24 @@ def legal_file(USER_PRESETS: dict = None, task: str = '', template_id: str = Non
     if client and resource:
         BUCKET = current_app.config["CLOUD_BUCKET"]
         file_path = f'users/{ROOT}/{KEY}/{FILE}'
-        bucket_contents = resource.Bucket(BUCKET).objects.all()
-        bucket_keys = [bk.key for bk in bucket_contents]
-        # print(f'{bucket_contents}\n{bucket_keys}')
 
         # Determine what to do with the File
         if task == 'SAVE':
-            print(FILE)
-            if FILE[-4:] == '.txt':
-                if file_path not in bucket_keys:
-                    client.put_object(Body=b'Cloud Logfile Instantiated', Bucket=BUCKET, Key=file_path)
 
-            elif FILE[-4:] == 'json':
+            if FILE[-4:] == 'json':
+
                 if file_type == 'USER_PRESETS':
                     client.put_object(Body=json.dumps(USER_PRESETS_COPY), Bucket=BUCKET, Key=file_path)
 
             elif FILE[-4:] == '.mid':
-                MIDI_filepath = f'users/{ROOT}/temp_MIDI_File.mid'
-                print(file_path)
+
                 with open(tmp_file, 'rb') as f:
                     tmp_MIDI = f.read()
                 client.put_object(Body=tmp_MIDI, Bucket=BUCKET, Key=file_path)
 
         elif task == 'LOAD':
-            if FILE[-4:] == '.txt':
-                ...
-            elif file_type == 'USER_PRESETS':
+
+            if file_type == 'USER_PRESETS':
                 content_object = resource.Object(BUCKET, file_path)
                 file_content = content_object.get()['Body'].read().decode('utf-8')
                 json_content = json.loads(file_content)
@@ -174,44 +160,3 @@ def legal_file(USER_PRESETS: dict = None, task: str = '', template_id: str = Non
                                                 Params={'Bucket': BUCKET, 'Key': file_path},
                                                 ExpiresIn=60)
             return url
-
-        elif task == 'LOG':
-            ...
-            # content_object = resource.Object(BUCKET, file_path)
-            # print(content_object)
-            # file_content = content_object.get()['Body'].read().decode('utf-8')
-            # print(file_content)
-            # LOGGER = logging.getLogger(f'{session_id}')
-            # LOGGER.setLevel(logging.DEBUG)
-            # formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-            # fh = logging.FileHandler(f'{session_id}')
-            # fh.setFormatter(formatter)
-            # LOGGER.addHandler(fh)
-            #
-            # return LOGGER
-
-
-def check_file_duplicates(UPLOAD_FOLDER_TYPE: str, UPLOAD_FOLDER: str, UPLOAD_FOLDER_KEY: str,
-                          base_filename: str, file_type: str, client_resource: any):
-    """ Function that checks for file duplicates """
-
-    # If APP Deployed Online, else if it was Deployed Locally
-    if UPLOAD_FOLDER_TYPE == 'CLOUD':
-        bucket_keys = client_resource.Bucket(UPLOAD_FOLDER).objects.all()
-        last_file = [lf.key for lf in bucket_keys]
-    else:
-        last_file = os.listdir(f'{UPLOAD_FOLDER}{UPLOAD_FOLDER_KEY}')
-
-    # Search Filename in Last File List and change it until it is no longer a duplicate (if applicable)
-    file_name, file_number = f"{base_filename}{file_type}", -1
-    while file_name in last_file:
-        file_number += 1  # Should eventually refactor to Regex if possible
-        file_name = f"{base_filename}({file_number}){file_type}"
-
-    # Bucket vs. Key Cloud Issues
-    if UPLOAD_FOLDER_TYPE == 'CLOUD':
-        file_path = file_name
-    else:
-        file_path = f'{UPLOAD_FOLDER}{UPLOAD_FOLDER_KEY}{file_name}'
-
-    return file_path, file_type

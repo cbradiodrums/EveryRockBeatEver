@@ -8,7 +8,7 @@ body {background-image: url(../_static/gaming2_bg.jpg);
       text-align: center;
         }
 
-h1, h3, h4, h5, h6 {
+h1 {
     color: black;
     -webkit-text-fill-color: cadetblue; /* Will override color (regardless of order) */
   /*-webkit-text-stroke-width: 1px;*/
@@ -77,3 +77,24 @@ nav ul li a, nav ul li span, header .action {
   display: block;
   padding: 0.5rem;
 }
+
+h3 {
+    color: white;
+    font-size: x-large;
+    text-align: center;
+    margin-left: auto; margin-right: auto;
+    max-width: 640px;
+}
+h4 {
+    color: white;
+    font-size: medium;
+    text-align: center;
+    margin-left: auto; margin-right: auto;
+    max-width: 640px;
+}
+h4 a {
+    color: lightpink;
+}
+.tab1 {
+            tab-size: 2;
+        }
