@@ -12,7 +12,7 @@ def create_app(test_config=None):
     app.config.from_mapping(APP_CONTEXT=os.getenv('CONTEXT'), VERSION=os.getenv('VERSION'),
                             SECRET_KEY=f'{app_key}')
 
-    # If this is a Full environment, use all resources
+    # If this is a Full environment, use all resources (development)
     if os.getenv('CONTEXT') == 'FULL':
         app.config.from_mapping(
             # Use Local Resources
@@ -24,7 +24,7 @@ def create_app(test_config=None):
             # Catalog App Version
             APP_KEY=app_key
         )
-    # If this is a Cloud environment, use cloud resources
+    # If this is a Cloud deployment, use cloud resources (production with multiple users)
     elif os.getenv('CONTEXT') == 'CLOUD':
         app.config.from_mapping(
             # Use Exclusively Cloud Resources
@@ -67,9 +67,9 @@ def create_app(test_config=None):
 
 # -- To Run app ('EveryRockBeatEver') (from top level in Terminal) --
 # $ python -m venv venv  # Virtual environment
-# $ source venv/Scripts/activate (bash)
+# $ source venv/Scripts/activate  # (bash terminal)
 # pip install -r requirements.txt
-# $ flask --app EveryRockBeatEver --debug run
+# $ flask --app EveryRockBeatEver --debug run  # (debug tag optional)
 
 # -- To Run Pytest (from top level in Terminal) --
 # $ python -m pytest

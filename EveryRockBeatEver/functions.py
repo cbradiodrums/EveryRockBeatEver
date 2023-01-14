@@ -1,15 +1,6 @@
-# -- Every Drumbeat Ever Function File --
-# END PRODUCT: A USER downloads MIDI data of finished drum beat; specified by USER parameters
-# RHYTHM SPACE: User-selected / Randomized generated rhythmic framework via musical rests
-# VOICINGS: User-selected / Randomized assignment of drumset voicings. [MODE: Linear / Beat]
-# DYNAMICS: User-selected / Randomized assignment of dynamics.
-# TIMBRE: Assignment of TIMBRES
-# TEMPO / PLAYBACK: Playback tool
-# SAVE FUNCTION: Submits Data to see user's favorite save states for ML
-# EXPORT MIDI: Exports drum riff via GM MAP MIDI Notes
-# CUSTOM EXPORT: Exports drum riffs via custom MIDI MAP
 from midiutil import MIDIFile
 from fractions import Fraction as Fr
+from flask import current_app
 import random
 from copy import deepcopy
 
@@ -454,11 +445,12 @@ def generate_MIDI(USER_PRESETS: dict = None, LOGGER: any = None, print_stmnt: an
     MIDI_file = rock_MIDI(rhythm_space=rhythm_space, time_signature=time_signature,
                           LOGGER=LOGGER, print_stmnt=print_stmnt)
 
-    # Temp MIDI File Overwrites.
-    file_path = 'temp_MIDI_File.mid'
+    # Temp MIDI File Overwrites. Utilizes USER Session ID
+    session_id = USER_PRESETS['session_id']
+    MIDI_filepath = f'{current_app.instance_path}/users/usr_{session_id}/temp_MIDI_File.mid'
 
     # Write the MIDI File if the directory exists
-    with open(file_path, 'wb') as f:
+    with open(MIDI_filepath, 'wb') as f:
         MIDI_file.writeFile(f)
 
-    return file_path
+    return MIDI_filepath

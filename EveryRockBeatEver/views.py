@@ -5,6 +5,7 @@ from EveryRockBeatEver.functions import generate_MIDI
 from EveryRockBeatEver.db import legal_file
 import json
 import secrets
+from copy import deepcopy
 from pygame import mixer
 
 bp = Blueprint("views", __name__)
@@ -24,21 +25,24 @@ def quick_generate(LOGGER: any = None, CONTEXT: any = None):
     version = current_app.config["VERSION"]
     USER_STOCK_JSON['app_version'] = f'{version}'
     session_id = session.get('session_id')
+    print(session.get('session_id'))
     if not session_id and not LOGGER:
         session_id = secrets.token_urlsafe(16)
-        USER_STOCK_JSON['session_id'] = f'{session_id}'
+        # USER_STOCK_JSON['session_id'] = f'{session_id}'
         session['session_id'] = session_id
 
-        # Begin Master LOG from Session ID
-        LOGGER = legal_file(USER_PRESETS=USER_STOCK_JSON, task='SAVE', file_type='LOG')
-        LOGGER = legal_file(USER_PRESETS=USER_STOCK_JSON, task='LOG', file_type='LOG')
+        # Begin Session LOG from Session ID --
+        print('Save Log First\n')
+        legal_file(task='SAVE', file_type='LOG', session_id=session_id)
+        LOGGER = legal_file(task='LOG', file_type='LOG', session_id=session_id)
         LOGGER.info(f"\n{'=' * 8} Begin Master Log | App Version: {version} {'=' * 8}\n"
-                    f"___&&& Session ID: {USER_STOCK_JSON['session_id']} &&&___\n")
+                    f"___&&& Session ID: {session.get('session_id')} &&&___\n")
     else:
-        LOGGER = legal_file(USER_PRESETS=USER_STOCK_JSON, task='LOAD', file_type='LOG')
+        LOGGER = legal_file(task='LOAD', file_type='LOG', session_id=session_id)
 
     MIDI_file = request.args.get('MIDI_file')  # Generated File
     url = request.args.get('url')  # Download Path from S3 Bucket
+    template_id = request.args.get('template_id')
 
     # If the USER submitted data
     if request.method == 'POST':
@@ -48,32 +52,46 @@ def quick_generate(LOGGER: any = None, CONTEXT: any = None):
             if 'Quick Generate' in request.form.get('quick_generate'):
                 # Instantiate / Rewrite a template ID
                 template_id = secrets.token_urlsafe(16)
-                USER_STOCK_JSON['template_id'] = f'{template_id}'
+                # USER_STOCK_JSON['template_id'] = f'{template_id}'
                 session['template_id'] = template_id
+                print(session.get('template_id'))
                 LOGGER.info(f"\n{'*' * 6} Template Initialized!! {'*' * 6}\n"
-                            f"+++[[[ Template ID: {USER_STOCK_JSON['template_id']} ]]]+++\n")
+                            f"+++[[[ Template ID: {session.get('template_id')} ]]]+++\n")
+
+                # Instantiate USER PRESETS for the Template -- Cloud Upload (Production)
+                legal_file(USER_PRESETS=USER_STOCK_JSON, file_type='USER_PRESETS', task='SAVE',
+                           session_id=session_id, template_id=template_id)
+                USER_TEMPLATE = legal_file(file_type='USER_PRESETS', task='LOAD',
+                                           session_id=session_id, template_id=template_id)
+                # print(USER_TEMPLATE)
 
                 # Preserve USER TEMPLATE and Generate MIDI File (print_stmnt = True for console logs)
-                MIDI_file = generate_MIDI(USER_PRESETS=USER_STOCK_JSON, LOGGER=LOGGER)
+                MIDI_filepath = generate_MIDI(USER_PRESETS=USER_TEMPLATE, LOGGER=LOGGER)
 
                 # Save MIDI File -- Overwrite Local Instance
-                MIDI_save = legal_file(USER_PRESETS=USER_STOCK_JSON, task='SAVE',
-                                       file_type='MIDI', tmp_file=MIDI_file)
-                # Save LOG
-                LOGGER = legal_file(USER_PRESETS=USER_STOCK_JSON, task='SAVE', file_type='LOG')
+                legal_file(USER_PRESETS=USER_TEMPLATE, task='SAVE',
+                           session_id=session_id, template_id=template_id,
+                           file_type='MIDI', tmp_file=MIDI_filepath)
+                # Save LOG -- Overwrite Cloud
+                legal_file(USER_PRESETS=USER_TEMPLATE, task='SAVE',
+                           file_type='LOG', session_id=session_id)
 
-                return redirect(url_for('views.quick_generate', MIDI_file=MIDI_file))
+                return redirect(url_for('views.quick_generate', MIDI_file=MIDI_filepath,
+                                        template_id=template_id))
 
         # USER clicked on Download MIDI after Generate MIDI
         if request.form.get('download_midi') and MIDI_file:
             if 'Download MIDI' in request.form['download_midi']:
+                USER_TEMPLATE = legal_file(file_type='USER_PRESETS', task='LOAD',
+                                           session_id=session_id, template_id=template_id)
                 if current_app.config["APP_CONTEXT"] != 'LOCAL':
-                    url = legal_file(USER_PRESETS=USER_STOCK_JSON, task='DOWNLOAD', file_type='MIDI')
+                    url = legal_file(USER_PRESETS=USER_TEMPLATE, task='DOWNLOAD', file_type='MIDI',
+                                     session_id=session_id, template_id=template_id)
                     return redirect(url)
                 else:
                     return send_file('../' + MIDI_file, MIDI_file)
 
-        # USER clicked on Playback MIDI after Generate MIDI
+        # USER clicked on Playback MIDI after Generate MIDI (LOCAL ONLY)
         if (request.form.get('playback_midi') and MIDI_file and
                 current_app.config["APP_CONTEXT"] == 'LOCAL'):
             if 'Playback MIDI' in request.form['playback_midi']:
@@ -82,9 +100,6 @@ def quick_generate(LOGGER: any = None, CONTEXT: any = None):
                 mixer.music.play()
             if 'Stop MIDI' in request.form['playback_midi']:
                 mixer.music.stop()
-
-    # SAVE LOG before transfer
-    # LOGGER = legal_file(USER_PRESETS=USER_STOCK_JSON, task='SAVE', file_type='LOG')
 
     return render_template('stepx_generate.html', title='ERBE - Generate MIDI File',
                            MIDI_file=MIDI_file, url=url, CONTEXT=current_app.config['APP_CONTEXT'],
