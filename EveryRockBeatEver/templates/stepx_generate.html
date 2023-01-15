@@ -28,10 +28,15 @@
         </tr><tr>
             <th style="padding-bottom: 20px"></th>
         </tr>
-        {% if CONTEXT != 'CLOUD' and MIDI_file %}
+        {% if MIDI_playback %}
+        <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
         <tr>
             <th>Playback MIDI File</th>
         </tr><tr>
+            <td>
+                <midi-player  src="{{ MIDI_file }}">
+                </midi-player>
+            </td>
             <td>
                 <input type="submit" name="playback_midi" value="Playback MIDI" class="mobile_button">
             </td>

@@ -1,6 +1,7 @@
 import os
 import secrets
 from flask import Flask
+# from flask_cors import CORS
 
 
 def create_app(test_config=None):
@@ -62,6 +63,7 @@ def create_app(test_config=None):
     app.register_blueprint(views.bp)
     app.register_blueprint(functions.bp)
     app.add_url_rule("/", endpoint="index")
+    # CORS(app)
 
     return app
 
