@@ -10,6 +10,22 @@ from copy import deepcopy
 def get_s3(client: any = 'client'):
     """ Connect to the application's cloud database. Configure in dotenv. """
 
+    # Define the configuration rules
+    if current_app.config['APP_CONTEXT'] == 'CLOUD':
+        AllowedOrigin = 'http://127.0.0.1:5000'
+    else:
+        AllowedOrigin = current_app.instance_path
+        print(AllowedOrigin)
+    cors_configuration = {
+        'CORSRules': [{
+            'AllowedHeaders': ['Authorization'],
+            'AllowedMethods': ['GET', 'PUT'],
+            'AllowedOrigins': [AllowedOrigin],
+            'ExposeHeaders': ['ETag', 'x-amz-request-id'],
+            'MaxAgeSeconds': 3000
+        }]
+    }
+
     if current_app.config["APP_CONTEXT"] != 'LOCAL':
         # Client Side
         if client == 'client':
@@ -21,6 +37,10 @@ def get_s3(client: any = 'client'):
                 aws_access_key_id=current_app.config["CLOUD_SECRET_ID"],
                 aws_secret_access_key=current_app.config["CLOUD_SECRET_KEY"]
             )
+            print(current_app.config["CLOUD_BUCKET"])
+            # print(s3.get_bucket_cors(Bucket=current_app.config["CLOUD_BUCKET"]))
+            # s3.put_bucket_cors(Bucket=current_app.config["CLOUD_BUCKET"],
+            #                    CORSConfiguration=cors_configuration)
         # Resource Side
         else:
             s3 = boto3.resource(
@@ -32,6 +52,7 @@ def get_s3(client: any = 'client'):
             )
     else:
         s3 = None
+
     return s3
 
 
