@@ -152,8 +152,17 @@ def legal_file(USER_PRESETS: dict = None, task: str = '', template_id: str = Non
             if file_type == 'USER_PRESETS':
                 content_object = resource.Object(BUCKET, file_path)
                 file_content = content_object.get()['Body'].read().decode('utf-8')
-                json_content = json.loads(file_content)
-            return json_content
+                loaded_content = json.loads(file_content)
+
+            elif file_type == 'MIDI':
+                content_object = resource.Object(BUCKET, file_path)
+                loaded_content = content_object.get()['Body'].read()
+                print(loaded_content)
+
+            else:
+                loaded_content = None
+
+            return loaded_content
 
         elif task == 'DOWNLOAD' and file_type != 'LOG':
             url = client.generate_presigned_url('get_object',
