@@ -50,17 +50,28 @@ timbres, dynamics, breakability, and subdivisions. Machine Learning is also a pr
 ---
 ### Resources
 
-This project would not have been possible without the use of some fantastic musical packages:
+This project would not have been possible without the use of some fantastic musical packages:<br>
 MIDIUtil: https://midiutil.readthedocs.io/en/1.2.1/ <br>
 html-midi-player: https://cifkao.github.io/html-midi-player/
 
 ---
-### 
-
-This project would not have been possible without the use of some fantastic musical packages:
-MIDIUtil: https://midiutil.readthedocs.io/en/1.2.1/
-html-midi-player: https://cifkao.github.io/html-midi-player/
-
+### About
+#### The Inspiration<br>
+The "Every Rock Beat Ever" App was originated from the idea of creating an algorithm as the rhythmic foundation 
+for a progressive metal album. The initial "code base" was a simple calculator in a Google Sheets field,
+but after its Author attended an online Data Science Bootcamp it was quickly adopted into a Python App.
+#### The Author<br>
+Chris Burrows is an all around drummer with specialization in Progressive Metal and a Programmer with budding 
+interests in Software Development and Data Science. You can also check out his contributions in musical projects 
+on various platforms:
+<br><br>- <a href="https://open.spotify.com/artist/5B7dQ1AUrxKGunRPsh01Jp?si=D24JJj3xRWWNpbmTz7GYAw">
+                Coma Cluster Void (Former Session Drummer)</a>
+    <br>- <a href="https://thoren.bandcamp.com/">
+                Thoren (Current Session Drummer)</a>
+    <br>- <a href="https://ropband.bandcamp.com/">
+                R.O.P. (Former Session / Live Drummer)</a>
+    <br>- <a href="https://open.spotify.com/artist/5pFx6otrNwzwA4x2gwXjeW?si=ntDvLWwQQ-WyxLi7jzI61A">
+                Wonderbox (Former Producer / Engineer)</a>
 
 
 
