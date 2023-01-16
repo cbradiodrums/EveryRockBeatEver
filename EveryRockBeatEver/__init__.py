@@ -9,7 +9,7 @@ def create_app(test_config=None):
     # Instantiate APP and Assign APP Context
     app = Flask(__name__, instance_relative_config=True, static_folder='_static')
     app_key = secrets.token_hex(16)
-    app.config.from_mapping(APP_CONTEXT=os.getenv('CONTEXT'), APP_VERSION=os.getenv('VERSION'),
+    app.config.from_mapping(APP_CONTEXT=os.getenv('CONTEXT'), APP_VERSION='1.0.0.1b',
                             SECRET_KEY=f'{app_key}')
 
     # If this is a Full environment, use all resources (development)

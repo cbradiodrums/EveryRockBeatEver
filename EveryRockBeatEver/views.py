@@ -21,8 +21,8 @@ def quick_generate(LOGGER: any = None):
         OUT: Write Pathos MIDI to MIDI_files folder """
 
     # Instantiate / Reference a session ID for the USER
-    version = current_app.config["APP_VERSION"]
-    USER_STOCK_JSON['app_version'] = f'{version}'
+    version = current_app.config['APP_VERSION']
+    USER_STOCK_JSON['app_version'] = f"{version}"
     session_id = session.get('session_id')
 
     if not session_id and not LOGGER:
@@ -114,7 +114,7 @@ def quick_generate(LOGGER: any = None):
 
     return render_template('stepx_generate.html', title='ERBE - Generate MIDI File',
                            MIDI_file=MIDI_file, url=url, CONTEXT=current_app.config['APP_CONTEXT'],
-                           MIDI_playback=MIDI_playback, version=f"{session.get('APP_VERSION')}",
+                           MIDI_playback=MIDI_playback, version=version,
                            session_id=f"{session.get('session_id')}",
                            template_id=f"{session.get('template_id')}")
 
