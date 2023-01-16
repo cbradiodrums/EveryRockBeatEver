@@ -6,6 +6,7 @@
             <td colspan="6" style="font-size: small; color: white">
                 APP Version: {{ version }}
             </td>
+    </tr><tr class="blank_row">
             <td colspan="6" style="font-size: small; color: white">
                 Session ID: {{ session_id }}
             </td>
@@ -35,6 +36,7 @@
         <tr>
             <th style="font-size: x-large">Playback MIDI File</th>
         </tr>
+            <!-- On 'Failure to Fetch' check CORS Configuration on Server -->
             {% if CONTEXT != 'LOCAL' %}
             <tr>
                 <td style="background-color: white">
