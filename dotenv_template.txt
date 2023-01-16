@@ -1,0 +1,16 @@
+### -- EveryRockBeatEver Environment Variables --
+## Create a '.env' file in the top level with the following variables:
+## Cloud Server Info ( Production / Online Deployment )
+# Use these sections if you plan to link an AWS-like
+ENDPOINT_URL=https://server.provider.com
+REGION_NAME=server
+## Cloud Pass Keys
+CLOUD_SECRET_ID=secret_hex
+CLOUD_SECRET_KEY=secret_hex
+## Cloud App Path
+BUCKET=bucket_name
+## -- Application Context --
+# LOCAL: If you are running on a local machine only
+# CLOUD: If you are deploying to cloud / production environment
+# FULL: If you would like to test both environments simultaneously
+CONTEXT=LOCAL
