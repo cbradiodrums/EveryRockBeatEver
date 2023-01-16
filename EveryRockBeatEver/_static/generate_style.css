@@ -72,6 +72,11 @@ input.mobile_button {
     font-size: xx-large;
     max-width: 320px;
 }
+input.playback_button {
+    width: 8em;  height: 4em;
+    font-size: x-large;
+    max-width: 320px;
+}
 
 nav ul li a, nav ul li span, header .action {
   display: block;

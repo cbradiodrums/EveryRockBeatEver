@@ -21,7 +21,7 @@ def quick_generate(LOGGER: any = None):
         OUT: Write Pathos MIDI to MIDI_files folder """
 
     # Instantiate / Reference a session ID for the USER
-    version = current_app.config["VERSION"]
+    version = current_app.config["APP_VERSION"]
     USER_STOCK_JSON['app_version'] = f'{version}'
     session_id = session.get('session_id')
 
@@ -102,19 +102,19 @@ def quick_generate(LOGGER: any = None):
 
         # USER clicked on Playback MIDI after Generate MIDI (LOCAL ONLY)
         if (request.form.get('playback_midi') and MIDI_file and
-                current_app.config["APP_CONTEXT"] == 'LOCAL'):
+                current_app.config["APP_CONTEXT"] != 'CLOUD'):
 
-            if 'Playback MIDI' in request.form['playback_midi']:
+            if 'PLAY' in request.form['playback_midi']:
                 mixer.init()
                 mixer.music.load(MIDI_file)
                 mixer.music.play()
 
-            if 'Stop MIDI' in request.form['playback_midi']:
+            if 'STOP' in request.form['playback_midi']:
                 mixer.music.stop()
 
     return render_template('stepx_generate.html', title='ERBE - Generate MIDI File',
                            MIDI_file=MIDI_file, url=url, CONTEXT=current_app.config['APP_CONTEXT'],
-                           MIDI_playback=MIDI_playback,
+                           MIDI_playback=MIDI_playback, version=f"{session.get('APP_VERSION')}",
                            session_id=f"{session.get('session_id')}",
                            template_id=f"{session.get('template_id')}")
 
