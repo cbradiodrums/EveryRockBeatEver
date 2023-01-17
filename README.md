@@ -1,6 +1,6 @@
 # Every Rock Beat Ever ( Drums )
-[![Pylint](https://github.com/cbradiodrums/EveryRockBeatEver/blob/main/.github/workflows/pylint.yml/badge.svg)](https://github.com/cbradiodrums/EveryRockBeatEver/blob/main/.github/workflows/pylint.yml)
-[![Pytest](https://github.com/cbradiodrums/Row_Eliminator_App/actions/workflows/pytest.yml/badge.svg)](https://github.com/cbradiodrums/Row_Eliminator_App/actions/workflows/pytest.yml)
+[![Pylint](https://github.com/cbradiodrums/EveryRockBeatEver/.github/workflows/pylint.yml/badge.svg)](https://github.com/cbradiodrums/EveryRockBeatEver/.github/workflows/pylint.yml)
+[![Pytest](https://github.com/cbradiodrums/EveryRockBeatEver/.github/workflows/pytest.yml/badge.svg)](https://github.com/cbradiodrums/EveryRockBeatEver/.github/workflows/pytest.yml)
 - <b>Objective</b>: Generate Unique and Interesting Rock Drum Beat MIDI Files
 - <b>Language</b>: Python, HTML, CSS
 - <b>License</b>: GNU
