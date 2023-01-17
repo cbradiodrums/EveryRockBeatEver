@@ -2,37 +2,43 @@
 [![Pylint](https://github.com/cbradiodrums/Row_Eliminator_App/actions/workflows/pylint.yml/badge.svg)](https://github.com/cbradiodrums/Row_Eliminator_App/actions/workflows/pylint.yml)
 [![Pytest](https://github.com/cbradiodrums/Row_Eliminator_App/actions/workflows/pytest.yml/badge.svg)](https://github.com/cbradiodrums/Row_Eliminator_App/actions/workflows/pytest.yml)
 - <b>Objective</b>: Generate Unique and Interesting Rock Drum Beat MIDI Files
-- <b>Language</b>: Python
+- <b>Language</b>: Python, HTML, CSS
 - <b>License</b>: GNU
-- <b>Filetype(s)</b>: .PY, .HTML, .XLS, & .CSV
-- <b>Deployment Server</b>:  ![Coming Soon]()
-- <b>Video Tutorial</b>:  ![Coming Soon]()
-- <b>Full Wiki Manual</b>:  ![Coming Soon]()
+- <b>Filetype(s)</b>: .PY, .HTML, Dockerfile, JSON
+- APP Video Demo: https://www.loom.com/share/ac3e25eed1494cfca877b65aebff30eb
+- <a href="https://urchin-app-z5fak.ondigitalocean.app/">
+                <b>Deployment Server</b></a>
 ---
 ### Contributor(s):
 - Chris Burrows (<i> Lead Programmer / Design)</i>
 ---
 ### Setup:
-Local Machine Instance
+Local Machine Instance -- Docker
 1. Git Clone this Repository
 2. Create `.env` in top level using `dotenv_template.txt`
 OR pass in environment variables (CONTEXT=LOCAL)
 3. Install Docker https://docs.docker.com/get-docker/
-   * Setup Video: https://www.loom.com/share/2e4699aff1724867a7e99e79832aa826
 4. In your terminal, cd (change directory) to the parent 'EveryRockBeatEver'
     * GitBash may be useful for a terminal application: https://git-scm.com/downloads
 5. Run the Dockerfile command `docker build -t erbe .`
 6. Run the Dockerfile command `docker run -p 5000:5000 erbe`
 7. Open a browser and navigate to the URL: `localhost:5000`
-8. Follow the page displays and Submit all parameters
-   * DEMO Video: https://www.loom.com/share/15da9e8fcd534940953618a748b446c4
+
+Local Machine Instance -- IDE
+1. Git Clone this Repository
+2. Create `.env` in top level using `dotenv_template.txt`
+3. In IDE Terminal: <br>
+`$ python -m venv venv  # Virtual environment` <br>
+`$ source venv/Scripts/activate`  # (bash terminal) <br>
+`$ pip install -r requirements.txt` <br>
+`$ flask --app EveryRockBeatEver --debug run`  # (debug tag optional)
 
 Cloud / Deployment Instance
-- Follow all the above steps, specifying CONTEXT=CLOUD in `.env`
+- Follow all the above steps, specifying `CONTEXT=CLOUD` in `.env`
 - Make sure your server is configured with the necessary CORS parameters.
 
 Test Both Environments Simultaneously
-- Follow all the above steps, specifying CONTEXT=FULL in `.env`
+- Follow all the above steps, specifying `CONTEXT=FULL` in `.env`
 
 ---
 ### How To:
