@@ -39,20 +39,15 @@ def quick_generate(LOGGER: any = None):
 
     # Retrieve USER Specific Session Information
     MIDI_file = request.args.get('MIDI_file')  # Generated File
-    print('MIDI FILE:', MIDI_file)
     url = request.args.get('url')  # Download Path from S3 Bucket
-    print('url:', url)
     template_id = request.args.get('template_id')
     if MIDI_file:
         USER_TEMPLATE = legal_file(file_type='USER_PRESETS', task='LOAD',
                                    session_id=session_id, template_id=template_id)
-        # MIDI_playback = legal_file(file_type='MIDI', task='LOAD', USER_PRESETS=USER_TEMPLATE,
-        #                            session_id=session_id, template_id=template_id)
         MIDI_playback = legal_file(USER_PRESETS=USER_TEMPLATE, task='DOWNLOAD', file_type='MIDI',
                                    session_id=session_id, template_id=template_id)
-        print(MIDI_playback)
     else:
-        MIDI_playback = None
+        MIDI_playback = MIDI_file
 
     # If the USER submitted data
     if request.method == 'POST':
@@ -98,7 +93,7 @@ def quick_generate(LOGGER: any = None):
                     return redirect(url)
 
                 else:
-                    return send_file('../' + MIDI_file, MIDI_file)
+                    return send_file(MIDI_file, MIDI_file)
 
         # USER clicked on Playback MIDI after Generate MIDI (LOCAL ONLY)
         if (request.form.get('playback_midi') and MIDI_file and

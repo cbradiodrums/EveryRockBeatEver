@@ -65,9 +65,11 @@ Chris Burrows is an all around drummer with specialization in Progressive Metal 
 interests in Software Development and Data Science. You can also check out his contributions in musical projects 
 on various platforms:
 <br><br>- <a href="https://open.spotify.com/artist/5B7dQ1AUrxKGunRPsh01Jp?si=D24JJj3xRWWNpbmTz7GYAw">
-                Coma Cluster Void (Former Session Drummer)</a>
+                Coma Cluster Void (Former Drummer)</a>
     <br>- <a href="https://thoren.bandcamp.com/">
-                Thoren (Current Session Drummer)</a>
+                Thoren (Current Drummer)</a>
+    <br>- <a href="https://vihaanmusic.com/">
+                Vihaan (Former Session / Live Drummer) </a>
     <br>- <a href="https://ropband.bandcamp.com/">
                 R.O.P. (Former Session / Live Drummer)</a>
     <br>- <a href="https://open.spotify.com/artist/5pFx6otrNwzwA4x2gwXjeW?si=ntDvLWwQQ-WyxLi7jzI61A">
