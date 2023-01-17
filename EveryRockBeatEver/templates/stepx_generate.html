@@ -38,7 +38,7 @@
         </tr>
         {% endif %}
         <!-- On 'Failure to Fetch' check CORS Configuration on Server -->
-        {% if CONTEXT != 'LOCAL' %}
+        {% if MIDI_playback and CONTEXT != 'LOCAL' %}
         <tr>
             <td style="background-color: lightblue">
                 <midi-player
