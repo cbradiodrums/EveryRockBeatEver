@@ -15,8 +15,6 @@ def create_app(test_config=None):
     # If this is a Full environment, use all resources (development)
     if os.getenv('CONTEXT') == 'FULL':
         app.config.from_mapping(
-            # Use Local Resources
-            LOCAL_UPLOAD=app.instance_path,
             # Use Cloud Resources
             CLOUD_SERVER=os.getenv('ENDPOINT_URL'), CLOUD_REGION=os.getenv('REGION_NAME'),
             CLOUD_SECRET_ID=os.getenv('CLOUD_SECRET_ID'), CLOUD_SECRET_KEY=os.getenv('CLOUD_SECRET_KEY'),
@@ -34,11 +32,6 @@ def create_app(test_config=None):
             # Catalog App Version
             APP_KEY=app_key
         )
-    # If this is a local bench run, ignore cloud database access
-    else:
-        app.config.from_mapping(
-            # Use Local Resources
-            LOCAL_UPLOAD=app.instance_path)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -62,7 +55,6 @@ def create_app(test_config=None):
     app.register_blueprint(views.bp)
     app.register_blueprint(functions.bp)
     app.add_url_rule("/", endpoint="index")
-    # CORS(app)
 
     return app
 

@@ -4,7 +4,7 @@
      <!-- Page Info Row -->
     <tr class="blank_row">
             <td colspan="6" style="font-size: small; color: white">
-                APP Version: {{ version }}
+                APP Version: {{ version }}  || [{{ CONTEXT }}]
             </td>
     </tr><tr class="blank_row">
             <td colspan="6" style="font-size: small; color: white">
@@ -32,33 +32,33 @@
         </tr><tr>
             <th style="padding-bottom: 20px"></th>
         </tr>
-        {% if MIDI_playback %}
+        {% if MIDI_file %}
         <tr>
             <th style="font-size: x-large">Playback MIDI File</th>
         </tr>
-            <!-- On 'Failure to Fetch' check CORS Configuration on Server -->
-            {% if CONTEXT != 'LOCAL' %}
-            <tr>
-                <td style="background-color: lightblue">
-                    <midi-player
-                        src="{{  MIDI_playback }}"
-                        sound-font visualizer="#myPianoRollVisualizer">
-                    </midi-player>
-                    <midi-visualizer type="piano-roll" id="myPianoRollVisualizer"
-                      src="{{  MIDI_playback }}" style="color: white">
-                    </midi-visualizer>
-                    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
-                </td>
-            </tr>
-            {% endif %}
-            {% if CONTEXT != 'CLOUD' %}
-            <tr>
-                <td>
-                    <input type="submit" name="playback_midi" value="PLAY" class="playback_button">
-                    <input type="submit" name="playback_midi" value="STOP" class="playback_button">
-                </td>
-            </tr>
-            {% endif %}
+        {% endif %}
+        <!-- On 'Failure to Fetch' check CORS Configuration on Server -->
+        {% if CONTEXT != 'LOCAL' %}
+        <tr>
+            <td style="background-color: lightblue">
+                <midi-player
+                    src="{{  MIDI_playback }}"
+                    sound-font visualizer="#myPianoRollVisualizer">
+                </midi-player>
+                <midi-visualizer type="piano-roll" id="myPianoRollVisualizer"
+                  src="{{  MIDI_playback }}" style="color: white">
+                </midi-visualizer>
+                <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
+            </td>
+        </tr>
+        {% endif %}
+        {% if MIDI_file and CONTEXT != 'CLOUD' %}
+        <tr>
+            <td>
+                <input type="submit" name="playback_midi" value="PLAY" class="playback_button">
+                <input type="submit" name="playback_midi" value="STOP" class="playback_button">
+            </td>
+        </tr>
         {% endif %}
         <tr>
             <th style="padding-bottom: 20px"></th>
